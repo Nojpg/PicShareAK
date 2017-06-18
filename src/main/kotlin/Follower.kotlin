@@ -1,0 +1,11 @@
+import kotlin.js.Date
+
+/**
+ * Created by Nojpg on 15.06.17.
+ */
+data class Follower(
+        var id: String?,
+        var date: Date,
+        var account: Account,
+        var follower: Account
+)
