@@ -14,16 +14,18 @@ import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.js.json
 
+const val URL: String = "http://picshare-sfedu.azurewebsites.net/sql/"
+
 //Main
 fun main(args: Array<String>) {
-    var url: String = "http://picshare-sfedu.azurewebsites.net/sql/"
 
     window.addEventListener("DOMContentLoaded", fun(_: Event) {
-        authGUI()
+        gAuthGUI()
+
 //        allPostsWithNav()
     })
     println("true")
-    singUp(username = "test", password = "testpass", gender = true, priv = true, photo = null, newUrl = url)
+
 
 }
 

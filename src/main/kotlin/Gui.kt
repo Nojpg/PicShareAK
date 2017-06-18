@@ -1,22 +1,25 @@
+@file:Suppress("UnsafeCastFromDynamic")
+
 import kotlinx.html.*
 import kotlinx.html.dom.create
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
-import org.w3c.dom.Element
-import org.w3c.dom.HTMLDivElement
-import org.w3c.dom.HTMLElement
+import kotlinx.html.js.onSubmitFunction
+import org.w3c.dom.*
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
+import org.w3c.xhr.FormData
 import kotlin.browser.document
 import kotlin.browser.window
 
 /**
- * Created by Nojpg on 17.06.17.
- */
+* Created by Nojpg on 17.06.17.
+*/
 //GUI for auth Form
-fun authGUI() {
+fun gAuthGUI() {
     window.history.pushState(null, "Authorization", "/auth")
     val root: Element? = document.getElementById("root")
+    root!!.innerHTML = ""
     val authWin: Element = document.create.div {
         id = "form_container_auth"
         form{
@@ -28,7 +31,7 @@ fun authGUI() {
                 classes = setOf("singIn")
 
                 input {
-                    name = "Login"
+                    id = "LoginAuth"
                     type= InputType.text
                     placeholder = "Username"
                 }
@@ -38,16 +41,24 @@ fun authGUI() {
                 classes = setOf("singIn")
 
                 input{
-                    name = "Password"
+                    id = "PasswordAuth"
                     type = InputType.password
                     placeholder = "Password"
                 }
             }
             div {
-
                 input {
                     id = "singInSub"
                     type = InputType.submit
+                    onClickFunction = fun (_: Event){
+                        window.history.pushState(null, "Feed List", "/feed")
+                        val username: String? = document.getElementById("LoginAuth")!!.nodeValue
+                        val password: String? = document.getElementById("PasswordAuth")!!.nodeValue
+                        if (singIn(username, password, URL)){
+                            gFeedList()
+                        }
+
+                    }
                     + "Sign in"
                 }
             }
@@ -58,7 +69,7 @@ fun authGUI() {
                     value = "Registration"
                     onClickFunction = fun (_: Event){
                         window.history.pushState(null, "Registration", "/registration")
-                        regGui()
+                        gRegGui()
                     }
                 }
             }
@@ -89,26 +100,40 @@ fun authGUI() {
 
         }
     }
-    root!!.appendChild(authWin)
+    root.appendChild(authWin)
 }
 
 //GUI for registration Form
-fun regGui(){
+fun gRegGui(){
 
     var root: Element? = document.getElementById("root")
     root!!.innerHTML = ""
     val regWin: Element = document.create.div {
         id = "form_container_reg"
+
         form{
 
-            method = FormMethod.post
-            action = "#main"
+//            method = FormMethod.post
+            id = "formTestReg"
+            name = "formTestReg"
+//            action = singUp()
+            onSubmitFunction = fun(_: Event){
+                window.history.pushState(null, "Authorization", "/auth")
+//                val username = document.getElementById("Login")!!.nodeValue
+//                val password = document.getElementById("Password")!!.nodeValue
+//                val email = document.getElementById("Email")!!.nodeValue
+                val formTestReg: FormData = FormData(document.getElementById("formTestReg")!! as HTMLFormElement)
+                println(formTestReg)
+                println(JSON.stringify(formTestReg))
+//                singUp(username = username!!, password = password!!, email = email!!, gender = radioCheck("radioGender"), priv = radioCheck("radioPriv"), photo = null, URL = URL, formtest = formTestReg)
+                gAuthGUI()
+            }
             //TODO fun POST
             div {
                 classes = setOf("singIn")
 
                 input {
-                    name = "Login"
+                    id = "LoginReg"
                     type = InputType.text
                     placeholder = "Username"
                 }
@@ -117,7 +142,7 @@ fun regGui(){
                 classes = setOf("singIn")
 
                 input {
-                    name = "Email"
+                    id = "EmailReg"
                     type = InputType.email
                     placeholder = "Email"
                 }
@@ -127,22 +152,22 @@ fun regGui(){
 
                 label {
                     input {
-                        name = "radioGender"
+                        name = "radioGenderReg"
                         type = InputType.radio
                         value = "male"
                     }
                     + "male"
-                    for_ = "radioGender"
+                    for_ = "radioGenderReg"
                 }
 
                 label {
                     input {
-                        name = "radioGender"
+                        name = "radioGenderReg"
                         type = InputType.radio
                         value = "female"
                     }
                     + "female"
-                    for_ = "radioGender"
+                    for_ = "radioGenderReg"
                 }
             }
             div {
@@ -150,29 +175,29 @@ fun regGui(){
 
                 label {
                     input {
-                        name = "radioPriv"
+                        name = "radioPrivReg"
                         type = InputType.radio
                         value = "true"
                     }
                     + "private"
-                    for_ = "radioPriv"
+                    for_ = "radioPrivReg"
                 }
 
                 label {
                     input {
-                        name = "radioPriv"
+                        name = "radioPrivReg"
                         type = InputType.radio
                         value = "true"
                     }
                     + "not private"
-                    for_ = "radioPriv"
+                    for_ = "radioPrivReg"
                 }
             }
             div {
                 classes = setOf("singIn")
 
                 input{
-                    name = "Password"
+                    id = "PasswordReg"
                     type = InputType.password
                     placeholder = "Password"
                 }
@@ -183,35 +208,22 @@ fun regGui(){
                 input {
                     name = "photoReg"
                     type = InputType.file
-                    value = "photo"
                 }
             }
             div {
                 input {
-                    id = "singInSub"
+                    id = "registration"
                     type = InputType.submit
-                    + "Sign in"
-                }
+                    value = "registration"
 
-            }
-            div {
-                id = "registration"
-                a {  //TODO change to inputType.button
-                    href=""
-                    + "Registration"
                 }
             }
-
         }
     }
     root.appendChild(regWin)
 }
 
-fun allPostsWithNav(){
-    window.history.pushState(null, "Authorization", "/auth")
-
-    var root: Element? = document.getElementById("root")
-    root!!.innerHTML = ""
+fun gNavBar(): Element {
     val navBar: Element = document.create.div {
         id = "navBar"
         ul {
@@ -219,6 +231,9 @@ fun allPostsWithNav(){
             li {
                 classes = setOf("listOfNav")
                 + "Log Out"
+                onClickFunction = fun (_: Event){
+                    logOut(URL = URL)
+                }
             }
             li {
                 classes = setOf("listOfNav")
@@ -246,6 +261,15 @@ fun allPostsWithNav(){
             }
         }
     }
+    return navBar
+}
+
+fun gAllPostsFromAcc(){
+    window.history.pushState(null, "Authorization", "/auth")
+
+    var root: Element? = document.getElementById("root")
+    root!!.innerHTML = ""
+
 
     val allPostFromAcc: Element = document.create.div {
         id = "allPostFromAcc"
@@ -280,7 +304,41 @@ fun allPostsWithNav(){
         }
     }
 
-    root.appendChild(navBar)
+    root.appendChild(gNavBar())
     root.appendChild(allPostFromAcc)
 }
 
+fun gFeed(): Element{
+    val feed: Element = document.create.div {
+            id = "postsUserGet"
+
+            div {
+                id = "postUserGetDate"
+            }
+            div {
+                id = "postUserGetPhoto"
+            }
+            div {
+                id = "postUserGetLikes"
+            }
+    }
+    return feed
+}
+
+fun gFeedList(){
+    window.history.pushState(null, "Feed", "/feed")
+
+    var root: Element? = document.getElementById("root")
+    root!!.innerHTML = ""
+
+    val feedList = document.create.div {
+        id = "feedList"
+
+        div {
+            gFeed() //TODO FOR RESPONSE
+
+        }
+    }
+    root.appendChild(gNavBar())
+    root.appendChild(feedList)
+}
