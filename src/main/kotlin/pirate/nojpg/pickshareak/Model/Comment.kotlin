@@ -1,3 +1,5 @@
+package pirate.nojpg.pickshareak.Model
+
 import kotlin.js.Date
 
 /**
@@ -5,7 +7,7 @@ import kotlin.js.Date
  */
 data class Comment(
         var id: String?,
-        var date: Date,
+        var date: kotlin.js.Date,
         var account: Account,
         var text: String
 )

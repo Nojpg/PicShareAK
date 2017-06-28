@@ -1,3 +1,5 @@
+package pirate.nojpg.pickshareak.Model
+
 import kotlin.js.Date
 
 /**

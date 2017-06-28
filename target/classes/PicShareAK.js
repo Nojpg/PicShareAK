@@ -6,7 +6,9 @@ if (typeof this['kotlinx-html-js'] === 'undefined') {
 }
 var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   'use strict';
+  var iterator = Kotlin.kotlin.js.iterator_s8jyvk$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var print = Kotlin.kotlin.io.print_s8jyv4$;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var json = Kotlin.kotlin.js.json_pyyo18$;
   var get_create = $module$kotlinx_html_js.kotlinx.html.dom.get_create_4wc2mh$;
@@ -18,589 +20,257 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   var input = $module$kotlinx_html_js.kotlinx.html.input_e1g74z$;
   var div = $module$kotlinx_html_js.kotlinx.html.div_ri36nr$;
   var set_onClickFunction = $module$kotlinx_html_js.kotlinx.html.js.set_onClickFunction_pszlq2$;
-  var label = $module$kotlinx_html_js.kotlinx.html.label_yd75js$;
   var form = $module$kotlinx_html_js.kotlinx.html.form_3vb3wm$;
-  var div_0 = $module$kotlinx_html_js.kotlinx.html.js.div_wkomt5$;
-  var set_onSubmitFunction = $module$kotlinx_html_js.kotlinx.html.js.set_onSubmitFunction_pszlq2$;
+  var label = $module$kotlinx_html_js.kotlinx.html.label_yd75js$;
+  var div_0 = $module$kotlinx_html_js.kotlinx.html.div_59el9d$;
   var li = $module$kotlinx_html_js.kotlinx.html.li_yzv5uh$;
+  var button = $module$kotlinx_html_js.kotlinx.html.button_whohl6$;
   var ul = $module$kotlinx_html_js.kotlinx.html.ul_pzlyaf$;
-  function useHistTest() {
-    window.history.pushState(null, 'reg', '#reg');
+  var div_1 = $module$kotlinx_html_js.kotlinx.html.js.div_wkomt5$;
+  var img = $module$kotlinx_html_js.kotlinx.html.img_evw26v$;
+  var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
+  function showComments(res) {
+    var tmp$;
+    viewPosts();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var id = item.id;
+      var datetime = item.datetime;
+      var username = item.account.username;
+      var text = item.text;
+      viewComments(id, datetime, username, text);
+    }
   }
-  function AuthAcc(login, password) {
-    if (login === void 0)
-      login = '';
-    if (password === void 0)
-      password = '';
-    this.login = login;
-    this.password = password;
+  function fetchRequest$lambda(closure$fn) {
+    return function (response) {
+      var tmp$;
+      println(response.ok);
+      println(response.url);
+      println(response.status);
+      tmp$ = closure$fn;
+      if (Kotlin.equals(tmp$, 'delAcc'))
+        println('Deleted');
+      else if (Kotlin.equals(tmp$, 'logAcc'))
+        println('LogOut successful');
+      else if (Kotlin.equals(tmp$, 'subscribe'))
+        println('Now you are follower');
+      else if (Kotlin.equals(tmp$, 'unSubscribe'))
+        println('unsubscribed');
+      return response.json();
+    };
   }
-  AuthAcc.$metadata$ = {
-    kind: Kotlin.Kind.CLASS,
-    simpleName: 'AuthAcc',
-    interfaces: []
-  };
-  AuthAcc.prototype.component1 = function () {
-    return this.login;
-  };
-  AuthAcc.prototype.component2 = function () {
-    return this.password;
-  };
-  AuthAcc.prototype.copy_rkkr90$ = function (login, password) {
-    return new AuthAcc(login === void 0 ? this.login : login, password === void 0 ? this.password : password);
-  };
-  AuthAcc.prototype.toString = function () {
-    return 'AuthAcc(login=' + Kotlin.toString(this.login) + (', password=' + Kotlin.toString(this.password)) + ')';
-  };
-  AuthAcc.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.login) | 0;
-    result = result * 31 + Kotlin.hashCode(this.password) | 0;
-    return result;
-  };
-  AuthAcc.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.login, other.login) && Kotlin.equals(this.password, other.password)))));
-  };
+  function fetchRequest$lambda_0(closure$fn) {
+    return function (response) {
+      var tmp$;
+      tmp$ = closure$fn;
+      if (Kotlin.equals(tmp$, 'getAcc'))
+        getAcc(response);
+      else if (Kotlin.equals(tmp$, 'login'))
+        login(response);
+      else if (Kotlin.equals(tmp$, 'getPosts'))
+        getPosts(response);
+      else if (Kotlin.equals(tmp$, 'getLikes'))
+        getLikes(response);
+      else if (Kotlin.equals(tmp$, 'getComments'))
+        getComments(response);
+      else if (Kotlin.equals(tmp$, 'getSubs'))
+        getSubs(response);
+      else if (Kotlin.equals(tmp$, 'getFollower'))
+        getFollower(response);
+      else if (Kotlin.equals(tmp$, 'showComments'))
+        showComments(response);
+    };
+  }
+  function fetchRequest(method, body, url, fn) {
+    if (fn === void 0)
+      fn = '';
+    println(method + ' ' + body + ' ' + url);
+    println(JSON.stringify(headers));
+    var tmp$ = URL + url;
+    var method_0 = method;
+    var headers_0 = headers;
+    var body_0 = body;
+    var referrer = void 0;
+    var referrerPolicy_0 = referrerPolicy;
+    var mode_0 = mode;
+    var credentials_0 = credentials;
+    var cache_0 = cache;
+    var redirect_0 = redirect;
+    var integrity_0 = integrity;
+    var keepalive;
+    var window_0;
+    if (method_0 === void 0) {
+      method_0 = null;
+    }
+    if (headers_0 === void 0) {
+      headers_0 = null;
+    }
+    if (body_0 === void 0) {
+      body_0 = null;
+    }
+    if (referrer === void 0) {
+      referrer = null;
+    }
+    if (referrerPolicy_0 === void 0) {
+      referrerPolicy_0 = null;
+    }
+    if (mode_0 === void 0) {
+      mode_0 = null;
+    }
+    if (credentials_0 === void 0) {
+      credentials_0 = null;
+    }
+    if (cache_0 === void 0) {
+      cache_0 = null;
+    }
+    if (redirect_0 === void 0) {
+      redirect_0 = null;
+    }
+    if (integrity_0 === void 0) {
+      integrity_0 = null;
+    }
+    if (keepalive === void 0) {
+      keepalive = null;
+    }
+    if (window_0 === void 0) {
+      window_0 = null;
+    }
+    var o = {};
+    o['method'] = method_0;
+    o['headers'] = headers_0;
+    o['body'] = body_0;
+    o['referrer'] = referrer;
+    o['referrerPolicy'] = referrerPolicy_0;
+    o['mode'] = mode_0;
+    o['credentials'] = credentials_0;
+    o['cache'] = cache_0;
+    o['redirect'] = redirect_0;
+    o['integrity'] = integrity_0;
+    o['keepalive'] = keepalive;
+    o['window'] = window_0;
+    var request = new Request(tmp$, o);
+    window.fetch(request).then(fetchRequest$lambda(fn)).then(fetchRequest$lambda_0(fn));
+  }
+  var id;
+  var email;
+  var priv;
+  var gender;
+  var photo;
+  var username;
+  function getAcc(res) {
+    println(JSON.stringify(res));
+    println(res);
+    println(res.id);
+    id = res.id;
+    username = res.username;
+    email = res.email;
+    priv = res.priv;
+    gender = res.gender;
+    photo = res.photo;
+    getAccInfo(id, username, email, gender, priv, photo);
+  }
+  function login(res) {
+    println(JSON.stringify(res));
+    println(res);
+    id = res.id;
+    username = res.username;
+    email = res.email;
+    priv = res.priv;
+    gender = res.gender;
+    photo = res.photo;
+    sessionStorage.setItem('id', id);
+    sessionStorage.setItem('username', username);
+    print(sessionStorage.getItem('id'));
+    println(sessionStorage.getItem('username'));
+    mainWin();
+    viewAcc(id, username, email, gender, priv, photo);
+  }
+  function getPosts(res) {
+    var tmp$, tmp$_0;
+    viewPosts();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      println(JSON.stringify(item));
+      var id = item.id;
+      var datetime = item.datetime;
+      var likes = item.likes;
+      var like = 0;
+      tmp$_0 = iterator(likes);
+      while (tmp$_0.hasNext()) {
+        var item_0 = tmp$_0.next();
+        like = like + 1 | 0;
+      }
+      var username = item.account.username;
+      var photo = item.photo;
+      viewSinglePost(id, username, datetime, likes, photo, like);
+    }
+  }
+  function getLikes(res) {
+    var tmp$;
+    println(JSON.stringify(res));
+    viewPosts();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var id = item.id;
+      var datetime = item.datetime;
+      var username = item.account.username;
+      viewLike(id, datetime, username);
+    }
+  }
+  function getComments(res) {
+    var tmp$;
+    viewPosts();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var id = item.id;
+      var datetime = item.datetime;
+      var username = item.account.username;
+      var text = item.text;
+      viewComments(id, datetime, username, text);
+    }
+  }
+  function getSubs(res) {
+    var tmp$;
+    subs();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var id = item.id;
+      var datetime = item.datetime;
+      var username = item.account.username;
+      sub(id, datetime, username);
+    }
+  }
+  function getFollower(res) {
+    var tmp$;
+    subs();
+    tmp$ = iterator(res);
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var id = item.id;
+      var datetime = item.datetime;
+      var username = item.follower.username;
+      sub(id, datetime, username);
+    }
+  }
   var URL;
-  function main$lambda(f) {
-    gAuthGUI();
-  }
+  var POST;
+  var GET;
+  var PUT;
+  var DELETE;
+  var integrity;
+  var credentials;
+  var redirect;
+  var cache;
+  var mode;
+  var referrerPolicy;
+  var headers;
   function main(args) {
-    window.addEventListener('DOMContentLoaded', main$lambda);
-    println('true');
-  }
-  function singUp$lambda(res) {
-    println(res.ok);
-    println(res.status);
-    println(res.url);
-    println(res);
-  }
-  function singUp(username, password, email, gender, priv, photo, URL_0, formtest) {
-    var url = URL_0 + 'accounts/';
-    println(url);
-    println(formtest);
-    println(JSON.stringify(formtest));
-    var method = 'post';
-    var headers = json([to('Content-Type', 'application/json')]);
-    var body = formtest;
-    var referrer;
-    var referrerPolicy;
-    var mode;
-    var credentials;
-    var cache;
-    var redirect;
-    var integrity;
-    var keepalive;
-    var window_0;
-    if (method === void 0) {
-      method = null;
-    }
-    if (headers === void 0) {
-      headers = null;
-    }
-    if (body === void 0) {
-      body = null;
-    }
-    if (referrer === void 0) {
-      referrer = null;
-    }
-    if (referrerPolicy === void 0) {
-      referrerPolicy = null;
-    }
-    if (mode === void 0) {
-      mode = null;
-    }
-    if (credentials === void 0) {
-      credentials = null;
-    }
-    if (cache === void 0) {
-      cache = null;
-    }
-    if (redirect === void 0) {
-      redirect = null;
-    }
-    if (integrity === void 0) {
-      integrity = null;
-    }
-    if (keepalive === void 0) {
-      keepalive = null;
-    }
-    if (window_0 === void 0) {
-      window_0 = null;
-    }
-    var o = {};
-    o['method'] = method;
-    o['headers'] = headers;
-    o['body'] = body;
-    o['referrer'] = referrer;
-    o['referrerPolicy'] = referrerPolicy;
-    o['mode'] = mode;
-    o['credentials'] = credentials;
-    o['cache'] = cache;
-    o['redirect'] = redirect;
-    o['integrity'] = integrity;
-    o['keepalive'] = keepalive;
-    o['window'] = window_0;
-    window.fetch(url, o).then(singUp$lambda);
-  }
-  function feedGet$lambda(res) {
-    println(res.ok);
-    println(res.status);
-    println(res.url);
-    println(res.body);
-    println(res.headers);
-  }
-  function feedGet(URL_0) {
-    var url = URL_0 + 'feed';
-    println(url);
-    window.fetch(url).then(feedGet$lambda);
-  }
-  function logOut$lambda(res) {
-    println(res.ok);
-    println(res.status);
-    println(res.url);
-    println(res.body);
-    println(res.headers);
-  }
-  function logOut(URL_0) {
-    var url = URL_0 + '/logout';
-    println(url);
-    window.fetch(url).then(logOut$lambda);
-  }
-  function singIn$lambda(res) {
-    println(res.ok);
-    println(res.status);
-    println(res.url);
-    println(res);
-  }
-  function singIn(username, password, URL_0) {
-    var tmp$;
-    var authAcc = new AuthAcc(username, password);
-    var url = URL_0 + 'login';
-    println(url);
-    var status = false;
-    tmp$ = JSON.stringify(authAcc);
-    var method = 'post';
-    var headers = json([to('Content-Type', 'application/json')]);
-    var body = tmp$;
-    var referrer;
-    var referrerPolicy;
-    var mode;
-    var credentials;
-    var cache;
-    var redirect;
-    var integrity;
-    var keepalive;
-    var window_0;
-    if (method === void 0) {
-      method = null;
-    }
-    if (headers === void 0) {
-      headers = null;
-    }
-    if (body === void 0) {
-      body = null;
-    }
-    if (referrer === void 0) {
-      referrer = null;
-    }
-    if (referrerPolicy === void 0) {
-      referrerPolicy = null;
-    }
-    if (mode === void 0) {
-      mode = null;
-    }
-    if (credentials === void 0) {
-      credentials = null;
-    }
-    if (cache === void 0) {
-      cache = null;
-    }
-    if (redirect === void 0) {
-      redirect = null;
-    }
-    if (integrity === void 0) {
-      integrity = null;
-    }
-    if (keepalive === void 0) {
-      keepalive = null;
-    }
-    if (window_0 === void 0) {
-      window_0 = null;
-    }
-    var o = {};
-    o['method'] = method;
-    o['headers'] = headers;
-    o['body'] = body;
-    o['referrer'] = referrer;
-    o['referrerPolicy'] = referrerPolicy;
-    o['mode'] = mode;
-    o['credentials'] = credentials;
-    o['cache'] = cache;
-    o['redirect'] = redirect;
-    o['integrity'] = integrity;
-    o['keepalive'] = keepalive;
-    o['window'] = window_0;
-    var req = o;
-    println(JSON.stringify(req));
-    window.fetch(url, req).then(singIn$lambda);
-    return status;
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda($receiver) {
-    set_id($receiver, 'LoginAuth');
-    $receiver.type = InputType.text;
-    $receiver.placeholder = 'Username';
-  }
-  function gAuthGUI$lambda$lambda$lambda($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda_0($receiver) {
-    set_id($receiver, 'PasswordAuth');
-    $receiver.type = InputType.password;
-    $receiver.placeholder = 'Password';
-  }
-  function gAuthGUI$lambda$lambda$lambda_0($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda_0);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda(f) {
-    var tmp$, tmp$_0;
-    window.history.pushState(null, 'Feed List', '/feed');
-    var username = ((tmp$ = document.getElementById('LoginAuth')) != null ? tmp$ : Kotlin.throwNPE()).nodeValue;
-    var password = ((tmp$_0 = document.getElementById('PasswordAuth')) != null ? tmp$_0 : Kotlin.throwNPE()).nodeValue;
-    if (singIn(username, password, URL)) {
-      gFeedList();
-    }
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda_1($receiver) {
-    set_id($receiver, 'singInSub');
-    $receiver.type = InputType.submit;
-    set_onClickFunction($receiver, gAuthGUI$lambda$lambda$lambda$lambda$lambda);
-    $receiver.unaryPlus_pdl1vz$('Sign in');
-  }
-  function gAuthGUI$lambda$lambda$lambda_1($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda_1);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda_0(f) {
-    window.history.pushState(null, 'Registration', '/registration');
-    gRegGui();
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda_2($receiver) {
-    $receiver.type = InputType.button;
-    $receiver.value = 'Registration';
-    set_onClickFunction($receiver, gAuthGUI$lambda$lambda$lambda$lambda$lambda_0);
-  }
-  function gAuthGUI$lambda$lambda$lambda_2($receiver) {
-    set_id($receiver, 'registration');
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda_2);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda$lambda(it) {
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda_1($receiver) {
-    $receiver.type = InputType.radio;
-    $receiver.name = 'radioSql';
-    $receiver.value = 'sql';
-    set_onClickFunction($receiver, gAuthGUI$lambda$lambda$lambda$lambda$lambda$lambda);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda_3($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda$lambda_1);
-    $receiver.unaryPlus_pdl1vz$('sql');
-    $receiver.for_ = 'radioSql';
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda$lambda_0(it) {
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda$lambda_2($receiver) {
-    $receiver.type = InputType.radio;
-    $receiver.name = 'radioNoSql';
-    $receiver.value = 'nosql';
-    set_onClickFunction($receiver, gAuthGUI$lambda$lambda$lambda$lambda$lambda$lambda_0);
-  }
-  function gAuthGUI$lambda$lambda$lambda$lambda_4($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda$lambda$lambda$lambda_2);
-    $receiver.unaryPlus_pdl1vz$('nosql');
-    $receiver.for_ = 'radioNoSql';
-  }
-  function gAuthGUI$lambda$lambda$lambda_3($receiver) {
-    set_id($receiver, 'radioChangeDB');
-    label($receiver, void 0, gAuthGUI$lambda$lambda$lambda$lambda_3);
-    label($receiver, void 0, gAuthGUI$lambda$lambda$lambda$lambda_4);
-  }
-  function gAuthGUI$lambda$lambda($receiver) {
-    $receiver.method = FormMethod.post;
-    $receiver.action = '#main';
-    div($receiver, void 0, gAuthGUI$lambda$lambda$lambda);
-    div($receiver, void 0, gAuthGUI$lambda$lambda$lambda_0);
-    div($receiver, void 0, gAuthGUI$lambda$lambda$lambda_1);
-    div($receiver, void 0, gAuthGUI$lambda$lambda$lambda_2);
-    div($receiver, void 0, gAuthGUI$lambda$lambda$lambda_3);
-  }
-  function gAuthGUI$lambda($receiver) {
-    set_id($receiver, 'form_container_auth');
-    form($receiver, void 0, void 0, void 0, void 0, gAuthGUI$lambda$lambda);
-  }
-  function gAuthGUI() {
-    window.history.pushState(null, 'Authorization', '/auth');
-    var root = document.getElementById('root');
-    (root != null ? root : Kotlin.throwNPE()).innerHTML = '';
-    var authWin = div_0(get_create(document), void 0, gAuthGUI$lambda);
-    root.appendChild(authWin);
-  }
-  function gRegGui$lambda$lambda$lambda(f) {
-    var tmp$, tmp$_0;
-    window.history.pushState(null, 'Authorization', '/auth');
-    var formTestReg = new FormData(Kotlin.isType(tmp$_0 = (tmp$ = document.getElementById('formTestReg')) != null ? tmp$ : Kotlin.throwNPE(), HTMLFormElement) ? tmp$_0 : Kotlin.throwCCE());
-    println(formTestReg);
-    println(JSON.stringify(formTestReg));
-    gAuthGUI();
-  }
-  function gRegGui$lambda$lambda$lambda$lambda($receiver) {
-    set_id($receiver, 'LoginReg');
-    $receiver.type = InputType.text;
-    $receiver.placeholder = 'Username';
-  }
-  function gRegGui$lambda$lambda$lambda_0($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_0($receiver) {
-    set_id($receiver, 'EmailReg');
-    $receiver.type = InputType.email;
-    $receiver.placeholder = 'Email';
-  }
-  function gRegGui$lambda$lambda$lambda_1($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda_0);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda$lambda($receiver) {
-    $receiver.name = 'radioGenderReg';
-    $receiver.type = InputType.radio;
-    $receiver.value = 'male';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_1($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda$lambda);
-    $receiver.unaryPlus_pdl1vz$('male');
-    $receiver.for_ = 'radioGenderReg';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda$lambda_0($receiver) {
-    $receiver.name = 'radioGenderReg';
-    $receiver.type = InputType.radio;
-    $receiver.value = 'female';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_2($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda$lambda_0);
-    $receiver.unaryPlus_pdl1vz$('female');
-    $receiver.for_ = 'radioGenderReg';
-  }
-  function gRegGui$lambda$lambda$lambda_2($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    label($receiver, void 0, gRegGui$lambda$lambda$lambda$lambda_1);
-    label($receiver, void 0, gRegGui$lambda$lambda$lambda$lambda_2);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda$lambda_1($receiver) {
-    $receiver.name = 'radioPrivReg';
-    $receiver.type = InputType.radio;
-    $receiver.value = 'true';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_3($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda$lambda_1);
-    $receiver.unaryPlus_pdl1vz$('private');
-    $receiver.for_ = 'radioPrivReg';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda$lambda_2($receiver) {
-    $receiver.name = 'radioPrivReg';
-    $receiver.type = InputType.radio;
-    $receiver.value = 'true';
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_4($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda$lambda_2);
-    $receiver.unaryPlus_pdl1vz$('not private');
-    $receiver.for_ = 'radioPrivReg';
-  }
-  function gRegGui$lambda$lambda$lambda_3($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    label($receiver, void 0, gRegGui$lambda$lambda$lambda$lambda_3);
-    label($receiver, void 0, gRegGui$lambda$lambda$lambda$lambda_4);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_5($receiver) {
-    set_id($receiver, 'PasswordReg');
-    $receiver.type = InputType.password;
-    $receiver.placeholder = 'Password';
-  }
-  function gRegGui$lambda$lambda$lambda_4($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda_5);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_6($receiver) {
-    $receiver.name = 'photoReg';
-    $receiver.type = InputType.file;
-  }
-  function gRegGui$lambda$lambda$lambda_5($receiver) {
-    set_classes($receiver, setOf('singIn'));
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda_6);
-  }
-  function gRegGui$lambda$lambda$lambda$lambda_7($receiver) {
-    set_id($receiver, 'registration');
-    $receiver.type = InputType.submit;
-    $receiver.value = 'registration';
-  }
-  function gRegGui$lambda$lambda$lambda_6($receiver) {
-    input($receiver, void 0, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda$lambda$lambda_7);
-  }
-  function gRegGui$lambda$lambda($receiver) {
-    set_id($receiver, 'formTestReg');
-    $receiver.name = 'formTestReg';
-    set_onSubmitFunction($receiver, gRegGui$lambda$lambda$lambda);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_0);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_1);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_2);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_3);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_4);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_5);
-    div($receiver, void 0, gRegGui$lambda$lambda$lambda_6);
-  }
-  function gRegGui$lambda($receiver) {
-    set_id($receiver, 'form_container_reg');
-    form($receiver, void 0, void 0, void 0, void 0, gRegGui$lambda$lambda);
-  }
-  function gRegGui() {
-    var tmp$;
-    var root = document.getElementById('root');
-    (root != null ? root : Kotlin.throwNPE()).innerHTML = '';
-    var regWin = div_0(get_create(document), void 0, gRegGui$lambda);
-    root.appendChild(regWin);
-    (tmp$ = document.body) != null ? tmp$.appendChild(regWin) : null;
-  }
-  function gNavBar$lambda$lambda$lambda$lambda(f) {
-    logOut(URL);
-  }
-  function gNavBar$lambda$lambda$lambda($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Log Out');
-    set_onClickFunction($receiver, gNavBar$lambda$lambda$lambda$lambda);
-  }
-  function gNavBar$lambda$lambda$lambda_0($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Account Settings');
-  }
-  function gNavBar$lambda$lambda$lambda_1($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Subscribers');
-  }
-  function gNavBar$lambda$lambda$lambda_2($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Subscriptions');
-  }
-  function gNavBar$lambda$lambda$lambda_3($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Likes');
-  }
-  function gNavBar$lambda$lambda$lambda_4($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Comments');
-  }
-  function gNavBar$lambda$lambda$lambda_5($receiver) {
-    set_classes($receiver, setOf('listOfNav'));
-    $receiver.unaryPlus_pdl1vz$('Feed');
-  }
-  function gNavBar$lambda$lambda($receiver) {
-    set_id($receiver, 'ulNavBar');
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_0);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_1);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_2);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_3);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_4);
-    li($receiver, void 0, gNavBar$lambda$lambda$lambda_5);
-  }
-  function gNavBar$lambda($receiver) {
-    set_id($receiver, 'navBar');
-    ul($receiver, void 0, gNavBar$lambda$lambda);
-  }
-  function gNavBar() {
-    var navBar = div_0(get_create(document), void 0, gNavBar$lambda);
-    return navBar;
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda($receiver) {
-    set_id($receiver, 'infoUserGetUsername');
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_0($receiver) {
-    set_id($receiver, 'infoUserGetGender');
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_1($receiver) {
-    set_id($receiver, 'infoUserGetPriv');
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_2($receiver) {
-    set_id($receiver, 'infoUserGetPhoto');
-  }
-  function gAllPostsFromAcc$lambda$lambda($receiver) {
-    set_id($receiver, 'infoUserGet');
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_0);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_1);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_2);
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_3($receiver) {
-    set_id($receiver, 'postUserGetDate');
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_4($receiver) {
-    set_id($receiver, 'postUserGetPhoto');
-  }
-  function gAllPostsFromAcc$lambda$lambda$lambda_5($receiver) {
-    set_id($receiver, 'postUserGetLikes');
-  }
-  function gAllPostsFromAcc$lambda$lambda_0($receiver) {
-    set_id($receiver, 'postsUserGet');
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_3);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_4);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda$lambda_5);
-  }
-  function gAllPostsFromAcc$lambda($receiver) {
-    set_id($receiver, 'allPostFromAcc');
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda);
-    div($receiver, void 0, gAllPostsFromAcc$lambda$lambda_0);
-  }
-  function gAllPostsFromAcc() {
-    window.history.pushState(null, 'Authorization', '/auth');
-    var root = document.getElementById('root');
-    (root != null ? root : Kotlin.throwNPE()).innerHTML = '';
-    var allPostFromAcc = div_0(get_create(document), void 0, gAllPostsFromAcc$lambda);
-    root.appendChild(gNavBar());
-    root.appendChild(allPostFromAcc);
-  }
-  function gFeed$lambda$lambda($receiver) {
-    set_id($receiver, 'postUserGetDate');
-  }
-  function gFeed$lambda$lambda_0($receiver) {
-    set_id($receiver, 'postUserGetPhoto');
-  }
-  function gFeed$lambda$lambda_1($receiver) {
-    set_id($receiver, 'postUserGetLikes');
-  }
-  function gFeed$lambda($receiver) {
-    set_id($receiver, 'postsUserGet');
-    div($receiver, void 0, gFeed$lambda$lambda);
-    div($receiver, void 0, gFeed$lambda$lambda_0);
-    div($receiver, void 0, gFeed$lambda$lambda_1);
-  }
-  function gFeed() {
-    var feed = div_0(get_create(document), void 0, gFeed$lambda);
-    return feed;
-  }
-  function gFeedList$lambda$lambda($receiver) {
-    gFeed();
-  }
-  function gFeedList$lambda($receiver) {
-    set_id($receiver, 'feedList');
-    div($receiver, void 0, gFeedList$lambda$lambda);
-  }
-  function gFeedList() {
-    window.history.pushState(null, 'Feed', '/feed');
-    var root = document.getElementById('root');
-    (root != null ? root : Kotlin.throwNPE()).innerHTML = '';
-    var feedList = div_0(get_create(document), void 0, gFeedList$lambda);
-    root.appendChild(gNavBar());
-    root.appendChild(feedList);
+    launch();
   }
   function Account(username, password, email, gender, priv, photo) {
     if (username === void 0)
@@ -610,9 +280,9 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     if (email === void 0)
       email = '';
     if (gender === void 0)
-      gender = true;
+      gender = '';
     if (priv === void 0)
-      priv = false;
+      priv = '';
     if (photo === void 0)
       photo = null;
     this.username = username;
@@ -645,7 +315,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   Account.prototype.component6 = function () {
     return this.photo;
   };
-  Account.prototype.copy_jve365$ = function (username, password, email, gender, priv, photo) {
+  Account.prototype.copy_ssykek$ = function (username, password, email, gender, priv, photo) {
     return new Account(username === void 0 ? this.username : username, password === void 0 ? this.password : password, email === void 0 ? this.email : email, gender === void 0 ? this.gender : gender, priv === void 0 ? this.priv : priv, photo === void 0 ? this.photo : photo);
   };
   Account.prototype.toString = function () {
@@ -664,52 +334,39 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   Account.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.username, other.username) && Kotlin.equals(this.password, other.password) && Kotlin.equals(this.email, other.email) && Kotlin.equals(this.gender, other.gender) && Kotlin.equals(this.priv, other.priv) && Kotlin.equals(this.photo, other.photo)))));
   };
-  function Post(id, datetime, account, photo, likes) {
-    if (photo === void 0)
-      photo = '';
-    this.id = id;
-    this.datetime = datetime;
-    this.account = account;
-    this.photo = photo;
-    this.likes = likes;
+  function AuthAcc(username, password) {
+    if (username === void 0)
+      username = '';
+    if (password === void 0)
+      password = '';
+    this.username = username;
+    this.password = password;
   }
-  Post.$metadata$ = {
+  AuthAcc.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
-    simpleName: 'Post',
+    simpleName: 'AuthAcc',
     interfaces: []
   };
-  Post.prototype.component1 = function () {
-    return this.id;
+  AuthAcc.prototype.component1 = function () {
+    return this.username;
   };
-  Post.prototype.component2 = function () {
-    return this.datetime;
+  AuthAcc.prototype.component2 = function () {
+    return this.password;
   };
-  Post.prototype.component3 = function () {
-    return this.account;
+  AuthAcc.prototype.copy_rkkr90$ = function (username, password) {
+    return new AuthAcc(username === void 0 ? this.username : username, password === void 0 ? this.password : password);
   };
-  Post.prototype.component4 = function () {
-    return this.photo;
+  AuthAcc.prototype.toString = function () {
+    return 'AuthAcc(username=' + Kotlin.toString(this.username) + (', password=' + Kotlin.toString(this.password)) + ')';
   };
-  Post.prototype.component5 = function () {
-    return this.likes;
-  };
-  Post.prototype.copy_b0ir2q$ = function (id, datetime, account, photo, likes) {
-    return new Post(id === void 0 ? this.id : id, datetime === void 0 ? this.datetime : datetime, account === void 0 ? this.account : account, photo === void 0 ? this.photo : photo, likes === void 0 ? this.likes : likes);
-  };
-  Post.prototype.toString = function () {
-    return 'Post(id=' + Kotlin.toString(this.id) + (', datetime=' + Kotlin.toString(this.datetime)) + (', account=' + Kotlin.toString(this.account)) + (', photo=' + Kotlin.toString(this.photo)) + (', likes=' + Kotlin.toString(this.likes)) + ')';
-  };
-  Post.prototype.hashCode = function () {
+  AuthAcc.prototype.hashCode = function () {
     var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.id) | 0;
-    result = result * 31 + Kotlin.hashCode(this.datetime) | 0;
-    result = result * 31 + Kotlin.hashCode(this.account) | 0;
-    result = result * 31 + Kotlin.hashCode(this.photo) | 0;
-    result = result * 31 + Kotlin.hashCode(this.likes) | 0;
+    result = result * 31 + Kotlin.hashCode(this.username) | 0;
+    result = result * 31 + Kotlin.hashCode(this.password) | 0;
     return result;
   };
-  Post.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.datetime, other.datetime) && Kotlin.equals(this.account, other.account) && Kotlin.equals(this.photo, other.photo) && Kotlin.equals(this.likes, other.likes)))));
+  AuthAcc.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.username, other.username) && Kotlin.equals(this.password, other.password)))));
   };
   function Like(id, date, account) {
     this.id = id;
@@ -746,42 +403,1043 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   Like.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.date, other.date) && Kotlin.equals(this.account, other.account)))));
   };
-  function radioCheck(name) {
-    var check = document.getElementsByName(name);
-    if (check[0].checked) {
-      return true;
-    }
-     else {
-      if (check[1].checked) {
-        return false;
-      }
-    }
-    return false;
+  function Post(id, datetime, account, photo, likes) {
+    if (photo === void 0)
+      photo = '';
+    this.id = id;
+    this.datetime = datetime;
+    this.account = account;
+    this.photo = photo;
+    this.likes = likes;
   }
-  _.useHistTest = useHistTest;
-  _.AuthAcc = AuthAcc;
-  Object.defineProperty(_, 'URL', {
+  Post.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: 'Post',
+    interfaces: []
+  };
+  Post.prototype.component1 = function () {
+    return this.id;
+  };
+  Post.prototype.component2 = function () {
+    return this.datetime;
+  };
+  Post.prototype.component3 = function () {
+    return this.account;
+  };
+  Post.prototype.component4 = function () {
+    return this.photo;
+  };
+  Post.prototype.component5 = function () {
+    return this.likes;
+  };
+  Post.prototype.copy_c6xhrm$ = function (id, datetime, account, photo, likes) {
+    return new Post(id === void 0 ? this.id : id, datetime === void 0 ? this.datetime : datetime, account === void 0 ? this.account : account, photo === void 0 ? this.photo : photo, likes === void 0 ? this.likes : likes);
+  };
+  Post.prototype.toString = function () {
+    return 'Post(id=' + Kotlin.toString(this.id) + (', datetime=' + Kotlin.toString(this.datetime)) + (', account=' + Kotlin.toString(this.account)) + (', photo=' + Kotlin.toString(this.photo)) + (', likes=' + Kotlin.toString(this.likes)) + ')';
+  };
+  Post.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.id) | 0;
+    result = result * 31 + Kotlin.hashCode(this.datetime) | 0;
+    result = result * 31 + Kotlin.hashCode(this.account) | 0;
+    result = result * 31 + Kotlin.hashCode(this.photo) | 0;
+    result = result * 31 + Kotlin.hashCode(this.likes) | 0;
+    return result;
+  };
+  Post.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.datetime, other.datetime) && Kotlin.equals(this.account, other.account) && Kotlin.equals(this.photo, other.photo) && Kotlin.equals(this.likes, other.likes)))));
+  };
+  function authWin$lambda$lambda$lambda$lambda($receiver) {
+    set_id($receiver, 'LoginAuth');
+    $receiver.type = InputType.text;
+    $receiver.placeholder = 'Username';
+  }
+  function authWin$lambda$lambda$lambda($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda$lambda);
+  }
+  function authWin$lambda$lambda$lambda$lambda_0($receiver) {
+    set_id($receiver, 'PasswordAuth');
+    $receiver.type = InputType.password;
+    $receiver.placeholder = 'Password';
+  }
+  function authWin$lambda$lambda$lambda_0($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda$lambda_0);
+  }
+  function authWin$lambda$lambda$lambda$lambda$lambda(f) {
+    var tmp$, tmp$_0;
+    var url = 'login';
+    var username = Kotlin.isType(tmp$ = document.getElementById('LoginAuth'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var password = Kotlin.isType(tmp$_0 = document.getElementById('PasswordAuth'), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE();
+    var body = JSON.stringify(json([to('username', username.value), to('password', password.value)]));
+    println(body);
+    fetchRequest(POST, body, url, 'login');
+  }
+  function authWin$lambda$lambda$lambda$lambda_1($receiver) {
+    set_id($receiver, 'singInSub');
+    $receiver.type = InputType.button;
+    $receiver.value = 'Submit';
+    set_onClickFunction($receiver, authWin$lambda$lambda$lambda$lambda$lambda);
+  }
+  function authWin$lambda$lambda$lambda_1($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda$lambda_1);
+  }
+  function authWin$lambda$lambda($receiver) {
+    $receiver.method = FormMethod.post;
+    $receiver.action = '#main';
+    div($receiver, void 0, authWin$lambda$lambda$lambda);
+    div($receiver, void 0, authWin$lambda$lambda$lambda_0);
+    div($receiver, void 0, authWin$lambda$lambda$lambda_1);
+  }
+  function authWin$lambda$lambda$lambda$lambda_2(f) {
+    viewReg();
+  }
+  function authWin$lambda$lambda$lambda_2($receiver) {
+    $receiver.type = InputType.button;
+    $receiver.value = 'Registration';
+    set_onClickFunction($receiver, authWin$lambda$lambda$lambda$lambda_2);
+  }
+  function authWin$lambda$lambda_0($receiver) {
+    set_id($receiver, 'registration');
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda_2);
+  }
+  function authWin$lambda$lambda$lambda$lambda$lambda_0(it) {
+  }
+  function authWin$lambda$lambda$lambda$lambda_3($receiver) {
+    $receiver.type = InputType.radio;
+    $receiver.name = 'radioSql';
+    $receiver.value = 'sql';
+    set_onClickFunction($receiver, authWin$lambda$lambda$lambda$lambda$lambda_0);
+  }
+  function authWin$lambda$lambda$lambda_3($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda$lambda_3);
+    $receiver.unaryPlus_pdl1vz$('sql');
+    $receiver.for_ = 'radioSql';
+  }
+  function authWin$lambda$lambda$lambda$lambda$lambda_1(it) {
+  }
+  function authWin$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.type = InputType.radio;
+    $receiver.name = 'radioNoSql';
+    $receiver.value = 'nosql';
+    set_onClickFunction($receiver, authWin$lambda$lambda$lambda$lambda$lambda_1);
+  }
+  function authWin$lambda$lambda$lambda_4($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, authWin$lambda$lambda$lambda$lambda_4);
+    $receiver.unaryPlus_pdl1vz$('nosql');
+    $receiver.for_ = 'radioNoSql';
+  }
+  function authWin$lambda$lambda_1($receiver) {
+    set_id($receiver, 'radioChangeDB');
+    label($receiver, void 0, authWin$lambda$lambda$lambda_3);
+    label($receiver, void 0, authWin$lambda$lambda$lambda_4);
+  }
+  function authWin$lambda($receiver) {
+    set_id($receiver, 'form_container_auth');
+    form($receiver, void 0, void 0, void 0, void 0, authWin$lambda$lambda);
+    div($receiver, void 0, authWin$lambda$lambda_0);
+    div($receiver, void 0, authWin$lambda$lambda_1);
+  }
+  function authWin() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    root.innerHTML = '';
+    var authWin = div_0(get_create(document), void 0, authWin$lambda);
+    root.appendChild(authWin);
+  }
+  function addComment$lambda$lambda($receiver) {
+    $receiver.type = InputType.text;
+    set_id($receiver, 'commText');
+  }
+  function addComment$lambda$lambda$lambda(closure$vid) {
+    return function (f) {
+      var tmp$, tmp$_0;
+      var link = Kotlin.isType(tmp$_0 = (tmp$ = document.getElementById('commText')) != null ? tmp$ : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE();
+      var body = json([to('text', link.value)]);
+      fetchRequest(POST, body, 'posts/' + closure$vid + '/comments');
+      mainWin();
+    };
+  }
+  function addComment$lambda$lambda_0(closure$vid) {
+    return function ($receiver) {
+      $receiver.type = InputType.button;
+      set_onClickFunction($receiver, addComment$lambda$lambda$lambda(closure$vid));
+    };
+  }
+  function addComment$lambda(closure$vid) {
+    return function ($receiver) {
+      input($receiver, void 0, void 0, void 0, void 0, void 0, addComment$lambda$lambda);
+      input($receiver, void 0, void 0, void 0, void 0, void 0, addComment$lambda$lambda_0(closure$vid));
+    };
+  }
+  function addComment(vid) {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    root.innerHTML = '';
+    var comm = div_0(get_create(document), void 0, addComment$lambda(vid));
+    root.appendChild(comm);
+  }
+  function launch() {
+    authWin();
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda($receiver) {
+    $receiver.type = InputType.text;
+    set_id($receiver, 'idGetAcc');
+    $receiver.placeholder = 'username or post id';
+  }
+  function mainWin$lambda$lambda$lambda$lambda($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda(f) {
+    var tmp$;
+    var id = Kotlin.isType(tmp$ = document.getElementById('idGetAcc'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var valueOfId = id.value;
+    var url = 'accounts/' + valueOfId;
+    var body = json([to('username', id.value)]);
+    println(JSON.stringify(body));
+    fetchRequest(GET, null, url, 'getAcc');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Get Acc');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_0($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_0);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_0(f) {
+    viewReg();
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_1($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Change Acc');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_0);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_1($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_1);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_1(f) {
+    authWin();
+    fetchRequest(DELETE, null, 'accounts', 'delAcc');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Delete acc');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_1);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_2($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_2);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_2(f) {
+    addPost();
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_3($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Add Post');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_2);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_3($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_3);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_3(f) {
+    var tmp$;
+    var id = Kotlin.isType(tmp$ = document.getElementById('idGetAcc'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var valueOfId = id.value;
+    var url = 'accounts/' + valueOfId + '/posts';
+    var body = json([to('username', valueOfId)]);
+    println(JSON.stringify(body));
+    fetchRequest(GET, null, url, 'getPosts');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Get all posts by acc');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_3);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_4($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_4);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_4(f) {
+    var tmp$;
+    var id = Kotlin.isType(tmp$ = document.getElementById('idGetAcc'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var valueOfId = id.value;
+    fetchRequest(DELETE, null, 'posts/' + valueOfId, 'delAcc');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_5($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Delete post');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_4);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_5($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_5);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_5(f) {
+    fetchRequest(GET, null, 'feed', 'getPosts');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_6($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Feeds');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_5);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_6($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_6);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_6(f) {
+    fetchRequest(GET, null, 'comments', 'getComments');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_7($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Comments');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_6);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_7($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_7);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_7(f) {
+    fetchRequest(GET, null, 'likes', 'getLikes');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_8($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Likes');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_7);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_8($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_8);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_8(f) {
+    authWin();
+    fetchRequest(GET, null, 'logout', 'logAcc');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_9($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Logout');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_8);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_9($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_9);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_9(f) {
+    fetchRequest(GET, null, 'accounts/' + username + '/followers', 'getSubs');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_10($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Subscribers');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_9);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_10($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_10);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_10(f) {
+    var username = sessionStorage.getItem('username');
+    fetchRequest(GET, null, 'accounts/' + Kotlin.toString(username) + '/followings', 'getFollower');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_11($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Subscriptions');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_10);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_11($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_11);
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda$lambda_11(f) {
+    var tmp$;
+    var id = Kotlin.isType(tmp$ = document.getElementById('idGetAcc'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var valueOfId = id.value;
+    fetchRequest(DELETE, null, 'followers/' + valueOfId, 'delAcc');
+  }
+  function mainWin$lambda$lambda$lambda$lambda$lambda_12($receiver) {
+    $receiver.unaryPlus_pdl1vz$('Delete follower');
+    set_onClickFunction($receiver, mainWin$lambda$lambda$lambda$lambda$lambda$lambda_11);
+  }
+  function mainWin$lambda$lambda$lambda$lambda_12($receiver) {
+    set_classes($receiver, setOf('listOfNav'));
+    button($receiver, void 0, void 0, void 0, void 0, mainWin$lambda$lambda$lambda$lambda$lambda_12);
+  }
+  function mainWin$lambda$lambda$lambda($receiver) {
+    set_id($receiver, 'ulNavBar');
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_0);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_1);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_2);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_3);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_4);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_5);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_6);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_7);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_8);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_9);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_10);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_11);
+    li($receiver, void 0, mainWin$lambda$lambda$lambda$lambda_12);
+  }
+  function mainWin$lambda$lambda($receiver) {
+    set_id($receiver, 'navBar');
+    ul($receiver, void 0, mainWin$lambda$lambda$lambda);
+  }
+  function mainWin$lambda($receiver) {
+    div($receiver, void 0, mainWin$lambda$lambda);
+  }
+  function mainWin() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    root.innerHTML = '';
+    var main = div_0(get_create(document), void 0, mainWin$lambda);
+    root.appendChild(main);
+  }
+  function viewReg$lambda$lambda$lambda$lambda($receiver) {
+    set_id($receiver, 'LoginReg');
+    $receiver.type = InputType.text;
+    $receiver.placeholder = 'Username';
+  }
+  function viewReg$lambda$lambda$lambda($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda);
+  }
+  function viewReg$lambda$lambda$lambda$lambda_0($receiver) {
+    set_id($receiver, 'EmailReg');
+    $receiver.type = InputType.email;
+    $receiver.placeholder = 'Email';
+  }
+  function viewReg$lambda$lambda$lambda_0($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_0);
+  }
+  function viewReg$lambda$lambda$lambda$lambda_1($receiver) {
+    set_id($receiver, 'genderReg');
+    $receiver.type = InputType.text;
+    $receiver.placeholder = 'true = male/ false = female';
+  }
+  function viewReg$lambda$lambda$lambda_1($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_1);
+  }
+  function viewReg$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.type = InputType.text;
+    set_id($receiver, 'privReg');
+    $receiver.placeholder = 'true = priv/ false = not priv';
+  }
+  function viewReg$lambda$lambda$lambda_2($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_2);
+  }
+  function viewReg$lambda$lambda$lambda$lambda_3($receiver) {
+    set_id($receiver, 'PasswordReg');
+    $receiver.type = InputType.password;
+    $receiver.placeholder = 'Password';
+  }
+  function viewReg$lambda$lambda$lambda_3($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_3);
+  }
+  function viewReg$lambda$lambda$lambda$lambda_4($receiver) {
+    set_id($receiver, 'PhotoReg');
+    $receiver.name = 'photoReg';
+    $receiver.type = InputType.file;
+  }
+  function viewReg$lambda$lambda$lambda_4($receiver) {
+    set_classes($receiver, setOf('singIn'));
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_4);
+  }
+  function viewReg$lambda$lambda$lambda$lambda$lambda(f) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10;
+    var username = Kotlin.isType(tmp$_0 = (tmp$ = document.getElementById('LoginReg')) != null ? tmp$ : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE();
+    var password = Kotlin.isType(tmp$_2 = (tmp$_1 = document.getElementById('PasswordReg')) != null ? tmp$_1 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_2 : Kotlin.throwCCE();
+    var email = Kotlin.isType(tmp$_4 = (tmp$_3 = document.getElementById('EmailReg')) != null ? tmp$_3 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_4 : Kotlin.throwCCE();
+    var gender = Kotlin.isType(tmp$_6 = (tmp$_5 = document.getElementById('genderReg')) != null ? tmp$_5 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_6 : Kotlin.throwCCE();
+    var priv = Kotlin.isType(tmp$_8 = (tmp$_7 = document.getElementById('privReg')) != null ? tmp$_7 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_8 : Kotlin.throwCCE();
+    var photo = Kotlin.isType(tmp$_10 = (tmp$_9 = document.getElementById('PhotoReg')) != null ? tmp$_9 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_10 : Kotlin.throwCCE();
+    var body = JSON.stringify(new Account((username != null ? username : Kotlin.throwNPE()).value, (password != null ? password : Kotlin.throwNPE()).value, (email != null ? email : Kotlin.throwNPE()).value, (gender != null ? gender : Kotlin.throwNPE()).value, (priv != null ? priv : Kotlin.throwNPE()).value, (photo != null ? photo : Kotlin.throwNPE()).value));
+    println(body);
+    fetchRequest(POST, body, 'accounts/', 'getAcc');
+    body = JSON.stringify(new AuthAcc((username != null ? username : Kotlin.throwNPE()).value, (password != null ? password : Kotlin.throwNPE()).value));
+    println(body);
+    fetchRequest(POST, body, 'login', 'getAcc');
+  }
+  function viewReg$lambda$lambda$lambda$lambda_5($receiver) {
+    set_id($receiver, 'registration');
+    $receiver.type = InputType.button;
+    $receiver.value = 'registration';
+    set_onClickFunction($receiver, viewReg$lambda$lambda$lambda$lambda$lambda);
+  }
+  function viewReg$lambda$lambda$lambda_5($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_5);
+  }
+  function viewReg$lambda$lambda$lambda$lambda$lambda_0(f) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10;
+    var username = Kotlin.isType(tmp$_0 = (tmp$ = document.getElementById('LoginReg')) != null ? tmp$ : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE();
+    var password = Kotlin.isType(tmp$_2 = (tmp$_1 = document.getElementById('PasswordReg')) != null ? tmp$_1 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_2 : Kotlin.throwCCE();
+    var email = Kotlin.isType(tmp$_4 = (tmp$_3 = document.getElementById('EmailReg')) != null ? tmp$_3 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_4 : Kotlin.throwCCE();
+    var gender = Kotlin.isType(tmp$_6 = (tmp$_5 = document.getElementById('genderReg')) != null ? tmp$_5 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_6 : Kotlin.throwCCE();
+    var priv = Kotlin.isType(tmp$_8 = (tmp$_7 = document.getElementById('privReg')) != null ? tmp$_7 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_8 : Kotlin.throwCCE();
+    var photo = Kotlin.isType(tmp$_10 = (tmp$_9 = document.getElementById('PhotoReg')) != null ? tmp$_9 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_10 : Kotlin.throwCCE();
+    var body = JSON.stringify(new Account((username != null ? username : Kotlin.throwNPE()).value, (password != null ? password : Kotlin.throwNPE()).value, (email != null ? email : Kotlin.throwNPE()).value, (gender != null ? gender : Kotlin.throwNPE()).value, (priv != null ? priv : Kotlin.throwNPE()).value, (photo != null ? photo : Kotlin.throwNPE()).value));
+    println(body);
+    fetchRequest(PUT, body, 'accounts', 'getAcc');
+    body = JSON.stringify(new AuthAcc((username != null ? username : Kotlin.throwNPE()).value, (password != null ? password : Kotlin.throwNPE()).value));
+    println(body);
+    fetchRequest(POST, body, 'login', 'getAcc');
+  }
+  function viewReg$lambda$lambda$lambda$lambda_6($receiver) {
+    set_id($receiver, 'registration');
+    $receiver.type = InputType.button;
+    $receiver.value = 'registration';
+    set_onClickFunction($receiver, viewReg$lambda$lambda$lambda$lambda$lambda_0);
+  }
+  function viewReg$lambda$lambda$lambda_6($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, viewReg$lambda$lambda$lambda$lambda_6);
+  }
+  function viewReg$lambda$lambda($receiver) {
+    set_id($receiver, 'formTestReg');
+    $receiver.name = 'formTestReg';
+    div($receiver, void 0, viewReg$lambda$lambda$lambda);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_0);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_1);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_2);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_3);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_4);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_5);
+    div($receiver, void 0, viewReg$lambda$lambda$lambda_6);
+  }
+  function viewReg$lambda($receiver) {
+    set_id($receiver, 'form_container_reg');
+    form($receiver, void 0, void 0, void 0, void 0, viewReg$lambda$lambda);
+  }
+  function viewReg() {
+    var root = document.getElementById('root');
+    (root != null ? root : Kotlin.throwNPE()).innerHTML = '';
+    var regWin = div_1(get_create(document), void 0, viewReg$lambda);
+    root.appendChild(regWin);
+  }
+  function encodeImg$lambda(closure$reader) {
+    return function (f) {
+      println('base64');
+      println(closure$reader.v.result);
+    };
+  }
+  function encodeImg(el) {
+    var file = el.files[0];
+    var reader = {v: new FileReader()};
+    reader.v.onloadend = encodeImg$lambda(reader);
+    reader.v.readAsDataURL(file);
+  }
+  function subs$lambda($receiver) {
+    set_id($receiver, 'subs');
+  }
+  function subs() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var subs = div_0(get_create(document), void 0, subs$lambda);
+    root.appendChild(subs);
+  }
+  function sub$lambda$lambda(closure$vid) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid);
+    };
+  }
+  function sub$lambda$lambda_0(closure$datetime) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('datetime = ' + closure$datetime);
+    };
+  }
+  function sub$lambda$lambda_1(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('username = ' + closure$username);
+    };
+  }
+  function sub$lambda(closure$vid, closure$datetime, closure$username) {
+    return function ($receiver) {
+      set_classes($receiver, setOf('sub'));
+      div($receiver, void 0, sub$lambda$lambda(closure$vid));
+      div($receiver, void 0, sub$lambda$lambda_0(closure$datetime));
+      div($receiver, void 0, sub$lambda$lambda_1(closure$username));
+    };
+  }
+  function sub(vid, datetime, username) {
+    var tmp$;
+    var subs = (tmp$ = document.getElementById('subs')) != null ? tmp$ : Kotlin.throwNPE();
+    var sub = div_0(get_create(document), void 0, sub$lambda(vid, datetime, username));
+    subs.appendChild(subs);
+  }
+  function addPost$lambda$lambda$lambda($receiver) {
+    set_id($receiver, 'photoPost');
+    $receiver.type = InputType.file;
+  }
+  function addPost$lambda$lambda$lambda$lambda(f) {
+    var tmp$;
+    var url = 'posts/';
+    var photo = Kotlin.isType(tmp$ = document.getElementById('photoPost'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var body = photo.value;
+    println(body);
+    println(JSON.stringify(body));
+  }
+  function addPost$lambda$lambda$lambda_0($receiver) {
+    set_id($receiver, 'sendFile');
+    $receiver.type = InputType.button;
+    set_onClickFunction($receiver, addPost$lambda$lambda$lambda$lambda);
+  }
+  function addPost$lambda$lambda($receiver) {
+    input($receiver, void 0, void 0, void 0, void 0, void 0, addPost$lambda$lambda$lambda);
+    input($receiver, void 0, void 0, void 0, void 0, void 0, addPost$lambda$lambda$lambda_0);
+  }
+  function addPost$lambda($receiver) {
+    set_id($receiver, 'postAdd');
+    form($receiver, void 0, void 0, void 0, void 0, addPost$lambda$lambda);
+  }
+  function addPost() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var postAdd = div_0(get_create(document), void 0, addPost$lambda);
+    root.appendChild(postAdd);
+  }
+  function viewPosts$lambda($receiver) {
+    set_id($receiver, 'allPosts');
+  }
+  function viewPosts() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var posts = div_0(get_create(document), void 0, viewPosts$lambda);
+    root.appendChild(posts);
+  }
+  function viewSinglePost$lambda$lambda(closure$like) {
+    return function ($receiver) {
+      set_id($receiver, 'likes');
+      $receiver.unaryPlus_pdl1vz$('Likes ' + closure$like);
+    };
+  }
+  function viewSinglePost$lambda$lambda$lambda(closure$vid) {
+    return function (f) {
+      var url = 'posts/' + closure$vid + '/likes';
+      fetchRequest(POST, null, url, '');
+    };
+  }
+  function viewSinglePost$lambda$lambda_0(closure$vid) {
+    return function ($receiver) {
+      set_id($receiver, 'presLike');
+      $receiver.unaryPlus_pdl1vz$('like');
+      set_onClickFunction($receiver, viewSinglePost$lambda$lambda$lambda(closure$vid));
+    };
+  }
+  function viewSinglePost$lambda$lambda$lambda_0(closure$likes) {
+    return function (f) {
+      var tmp$;
+      var likeId = '';
+      tmp$ = iterator(closure$likes);
+      while (tmp$.hasNext()) {
+        var item = tmp$.next();
+        if (item.account.username == sessionStorage.getItem('username')) {
+          likeId = item.id;
+        }
+      }
+      var url = 'likes/' + likeId;
+      fetchRequest(DELETE, null, url, 'delAcc');
+    };
+  }
+  function viewSinglePost$lambda$lambda_1(closure$likes) {
+    return function ($receiver) {
+      set_id($receiver, 'delLike');
+      $receiver.unaryPlus_pdl1vz$('delete like');
+      set_onClickFunction($receiver, viewSinglePost$lambda$lambda$lambda_0(closure$likes));
+    };
+  }
+  function viewSinglePost$lambda$lambda_2(closure$photo) {
+    return function ($receiver) {
+      set_id($receiver, 'imgPost');
+      $receiver.src = 'data:image/jpeg;base64, ' + Kotlin.toString(closure$photo);
+    };
+  }
+  function viewSinglePost$lambda$lambda$lambda_1(closure$vid) {
+    return function (f) {
+      fetchRequest(GET, null, 'posts/' + closure$vid + '/comments', 'showComm');
+    };
+  }
+  function viewSinglePost$lambda$lambda_3(closure$vid) {
+    return function ($receiver) {
+      set_id($receiver, 'commentsPostLook');
+      set_onClickFunction($receiver, viewSinglePost$lambda$lambda$lambda_1(closure$vid));
+    };
+  }
+  function viewSinglePost$lambda(closure$vid, closure$datetime, closure$username, closure$like, closure$likes, closure$photo) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid + ', datetime = ' + closure$datetime + ', username = ' + closure$username);
+      div($receiver, void 0, viewSinglePost$lambda$lambda(closure$like));
+      button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_0(closure$vid));
+      button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_1(closure$likes));
+      img($receiver, void 0, void 0, void 0, viewSinglePost$lambda$lambda_2(closure$photo));
+      button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_3(closure$vid));
+    };
+  }
+  function viewSinglePost(vid, username, datetime, likes, photo, like) {
+    var tmp$;
+    var posts = (tmp$ = document.getElementById('allPosts')) != null ? tmp$ : Kotlin.throwNPE();
+    var post = div_0(get_create(document), void 0, viewSinglePost$lambda(vid, datetime, username, like, likes, photo));
+    posts.appendChild(post);
+  }
+  function viewLike$lambda$lambda(closure$vid) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid);
+    };
+  }
+  function viewLike$lambda$lambda_0(closure$datetime) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('datetime = ' + closure$datetime);
+    };
+  }
+  function viewLike$lambda$lambda_1(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('username = ' + closure$username);
+    };
+  }
+  function viewLike$lambda(closure$vid, closure$datetime, closure$username) {
+    return function ($receiver) {
+      div($receiver, void 0, viewLike$lambda$lambda(closure$vid));
+      div($receiver, void 0, viewLike$lambda$lambda_0(closure$datetime));
+      div($receiver, void 0, viewLike$lambda$lambda_1(closure$username));
+    };
+  }
+  function viewLike(vid, datetime, username) {
+    var tmp$;
+    var posts = (tmp$ = document.getElementById('allPosts')) != null ? tmp$ : Kotlin.throwNPE();
+    var like = div_0(get_create(document), void 0, viewLike$lambda(vid, datetime, username));
+    posts.appendChild(like);
+  }
+  function viewComments$lambda$lambda(closure$vid) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid);
+    };
+  }
+  function viewComments$lambda$lambda_0(closure$datetime) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('datetime = ' + closure$datetime);
+    };
+  }
+  function viewComments$lambda$lambda_1(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('username = ' + closure$username);
+    };
+  }
+  function viewComments$lambda$lambda_2(closure$text) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('text = ' + closure$text);
+    };
+  }
+  function viewComments$lambda$lambda$lambda(closure$vid) {
+    return function (f) {
+      addComment(closure$vid);
+    };
+  }
+  function viewComments$lambda$lambda_3(closure$vid) {
+    return function ($receiver) {
+      set_id($receiver, 'addComm');
+      set_onClickFunction($receiver, viewComments$lambda$lambda$lambda(closure$vid));
+    };
+  }
+  function viewComments$lambda$lambda$lambda_0(f) {
+  }
+  function viewComments$lambda$lambda_4($receiver) {
+    set_id($receiver, 'delComm');
+    set_onClickFunction($receiver, viewComments$lambda$lambda$lambda_0);
+  }
+  function viewComments$lambda(closure$vid, closure$datetime, closure$username, closure$text) {
+    return function ($receiver) {
+      set_style($receiver, 'border: solid 2px');
+      div($receiver, void 0, viewComments$lambda$lambda(closure$vid));
+      div($receiver, void 0, viewComments$lambda$lambda_0(closure$datetime));
+      div($receiver, void 0, viewComments$lambda$lambda_1(closure$username));
+      div($receiver, void 0, viewComments$lambda$lambda_2(closure$text));
+      button($receiver, void 0, void 0, void 0, void 0, viewComments$lambda$lambda_3(closure$vid));
+      button($receiver, void 0, void 0, void 0, void 0, viewComments$lambda$lambda_4);
+    };
+  }
+  function viewComments(vid, datetime, username, text) {
+    var tmp$;
+    var posts = (tmp$ = document.getElementById('allPosts')) != null ? tmp$ : Kotlin.throwNPE();
+    var comment = div_0(get_create(document), void 0, viewComments$lambda(vid, datetime, username, text));
+    posts.appendChild(comment);
+  }
+  function getAccInfo$lambda$lambda(closure$vid) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid);
+    };
+  }
+  function getAccInfo$lambda$lambda_0(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('username = ' + closure$username);
+    };
+  }
+  function getAccInfo$lambda$lambda_1(closure$email) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('email = ' + closure$email);
+    };
+  }
+  function getAccInfo$lambda$lambda_2(closure$gender) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('gender = ' + closure$gender);
+    };
+  }
+  function getAccInfo$lambda$lambda_3(closure$priv) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('priv = ' + closure$priv);
+    };
+  }
+  function getAccInfo$lambda$lambda_4(closure$photo) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('photo = ' + Kotlin.toString(closure$photo));
+    };
+  }
+  function getAccInfo$lambda$lambda$lambda(closure$username) {
+    return function (f) {
+      var url = 'accounts/{' + closure$username + '}/followers';
+      fetchRequest(POST, null, url, 'subscribe');
+    };
+  }
+  function getAccInfo$lambda$lambda_5(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('subscribe');
+      set_onClickFunction($receiver, getAccInfo$lambda$lambda$lambda(closure$username));
+    };
+  }
+  function getAccInfo$lambda$lambda$lambda_0(closure$username) {
+    return function (f) {
+      var url = 'followings/{' + closure$username + '}';
+      fetchRequest(DELETE, null, url, 'unSubscribe');
+    };
+  }
+  function getAccInfo$lambda$lambda_6(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('subscribe');
+      set_onClickFunction($receiver, getAccInfo$lambda$lambda$lambda_0(closure$username));
+    };
+  }
+  function getAccInfo$lambda(closure$vid, closure$username, closure$email, closure$gender, closure$priv, closure$photo) {
+    return function ($receiver) {
+      set_id($receiver, 'getAccInfo');
+      div($receiver, void 0, getAccInfo$lambda$lambda(closure$vid));
+      div($receiver, void 0, getAccInfo$lambda$lambda_0(closure$username));
+      div($receiver, void 0, getAccInfo$lambda$lambda_1(closure$email));
+      div($receiver, void 0, getAccInfo$lambda$lambda_2(closure$gender));
+      div($receiver, void 0, getAccInfo$lambda$lambda_3(closure$priv));
+      div($receiver, void 0, getAccInfo$lambda$lambda_4(closure$photo));
+      button($receiver, void 0, void 0, void 0, void 0, getAccInfo$lambda$lambda_5(closure$username));
+      button($receiver, void 0, void 0, void 0, void 0, getAccInfo$lambda$lambda_6(closure$username));
+    };
+  }
+  function getAccInfo(vid, username, email, gender, priv, photo) {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var viewAccInfo = div_0(get_create(document), void 0, getAccInfo$lambda(vid, username, email, gender, priv, photo));
+    root.appendChild(viewAccInfo);
+  }
+  function viewAcc$lambda$lambda(closure$vid) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('id = ' + closure$vid);
+    };
+  }
+  function viewAcc$lambda$lambda_0(closure$username) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('username = ' + closure$username);
+    };
+  }
+  function viewAcc$lambda$lambda_1(closure$email) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('email = ' + closure$email);
+    };
+  }
+  function viewAcc$lambda$lambda_2(closure$gender) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('gender = ' + closure$gender);
+    };
+  }
+  function viewAcc$lambda$lambda_3(closure$priv) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('priv = ' + closure$priv);
+    };
+  }
+  function viewAcc$lambda$lambda_4(closure$photo) {
+    return function ($receiver) {
+      $receiver.unaryPlus_pdl1vz$('photo = ' + Kotlin.toString(closure$photo));
+    };
+  }
+  function viewAcc$lambda(closure$vid, closure$username, closure$email, closure$gender, closure$priv, closure$photo) {
+    return function ($receiver) {
+      set_id($receiver, 'viewAcc');
+      div($receiver, void 0, viewAcc$lambda$lambda(closure$vid));
+      div($receiver, void 0, viewAcc$lambda$lambda_0(closure$username));
+      div($receiver, void 0, viewAcc$lambda$lambda_1(closure$email));
+      div($receiver, void 0, viewAcc$lambda$lambda_2(closure$gender));
+      div($receiver, void 0, viewAcc$lambda$lambda_3(closure$priv));
+      div($receiver, void 0, viewAcc$lambda$lambda_4(closure$photo));
+    };
+  }
+  function viewAcc(vid, username, email, gender, priv, photo) {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var viewAccInfo = div_0(get_create(document), void 0, viewAcc$lambda(vid, username, email, gender, priv, photo));
+    root.appendChild(viewAccInfo);
+  }
+  var package$pirate = _.pirate || (_.pirate = {});
+  var package$nojpg = package$pirate.nojpg || (package$pirate.nojpg = {});
+  var package$pickshareak = package$nojpg.pickshareak || (package$nojpg.pickshareak = {});
+  var package$Controller = package$pickshareak.Controller || (package$pickshareak.Controller = {});
+  package$Controller.showComments_za3rmp$ = showComments;
+  package$Controller.fetchRequest_v5e3p0$ = fetchRequest;
+  Object.defineProperty(package$Controller, 'id', {
+    get: function () {
+      return id;
+    },
+    set: function (value) {
+      id = value;
+    }
+  });
+  Object.defineProperty(package$Controller, 'email', {
+    get: function () {
+      return email;
+    },
+    set: function (value) {
+      email = value;
+    }
+  });
+  Object.defineProperty(package$Controller, 'priv', {
+    get: function () {
+      return priv;
+    },
+    set: function (value) {
+      priv = value;
+    }
+  });
+  Object.defineProperty(package$Controller, 'gender', {
+    get: function () {
+      return gender;
+    },
+    set: function (value) {
+      gender = value;
+    }
+  });
+  Object.defineProperty(package$Controller, 'photo', {
+    get: function () {
+      return photo;
+    },
+    set: function (value) {
+      photo = value;
+    }
+  });
+  Object.defineProperty(package$Controller, 'username', {
+    get: function () {
+      return username;
+    },
+    set: function (value) {
+      username = value;
+    }
+  });
+  package$Controller.getAcc_za3rmp$ = getAcc;
+  package$Controller.login_za3rmp$ = login;
+  package$Controller.getPosts_za3rmp$ = getPosts;
+  package$Controller.getLikes_za3rmp$ = getLikes;
+  package$Controller.getComments_za3rmp$ = getComments;
+  package$Controller.getSubs_za3rmp$ = getSubs;
+  package$Controller.getFollower_za3rmp$ = getFollower;
+  Object.defineProperty(package$pickshareak, 'URL', {
     get: function () {
       return URL;
     }
   });
-  _.main_kand9s$ = main;
-  _.singUp_xw5fta$ = singUp;
-  _.feedGet_61zpoe$ = feedGet;
-  _.logOut_61zpoe$ = logOut;
-  _.singIn_bx1i3m$ = singIn;
-  _.gAuthGUI = gAuthGUI;
-  _.gRegGui = gRegGui;
-  _.gNavBar = gNavBar;
-  _.gAllPostsFromAcc = gAllPostsFromAcc;
-  _.gFeed = gFeed;
-  _.gFeedList = gFeedList;
-  _.Account = Account;
-  _.Post = Post;
-  _.Like = Like;
-  _.radioCheck_61zpoe$ = radioCheck;
+  Object.defineProperty(package$pickshareak, 'POST', {
+    get: function () {
+      return POST;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'GET', {
+    get: function () {
+      return GET;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'PUT', {
+    get: function () {
+      return PUT;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'DELETE', {
+    get: function () {
+      return DELETE;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'integrity', {
+    get: function () {
+      return integrity;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'credentials', {
+    get: function () {
+      return credentials;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'redirect', {
+    get: function () {
+      return redirect;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'cache', {
+    get: function () {
+      return cache;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'mode', {
+    get: function () {
+      return mode;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'referrerPolicy', {
+    get: function () {
+      return referrerPolicy;
+    }
+  });
+  Object.defineProperty(package$pickshareak, 'headers', {
+    get: function () {
+      return headers;
+    }
+  });
+  package$pickshareak.main_kand9s$ = main;
+  var package$Model = package$pickshareak.Model || (package$pickshareak.Model = {});
+  package$Model.Account = Account;
+  package$Model.AuthAcc = AuthAcc;
+  package$Model.Like = Like;
+  package$Model.Post = Post;
+  var package$View = package$pickshareak.View || (package$pickshareak.View = {});
+  package$View.authWin = authWin;
+  package$View.addComment_61zpoe$ = addComment;
+  package$View.launch = launch;
+  package$View.mainWin = mainWin;
+  package$View.viewReg = viewReg;
+  package$View.encodeImg_za3rmp$ = encodeImg;
+  package$View.subs = subs;
+  package$View.sub_6hosri$ = sub;
+  package$View.addPost = addPost;
+  package$View.viewPosts = viewPosts;
+  package$View.viewSinglePost_d0v4br$ = viewSinglePost;
+  package$View.viewLike_6hosri$ = viewLike;
+  package$View.viewComments_w74nik$ = viewComments;
+  package$View.getAccInfo_r2udw5$ = getAccInfo;
+  package$View.viewAcc_r2udw5$ = viewAcc;
+  id = '';
+  email = '';
+  priv = false;
+  gender = false;
+  photo = '';
+  username = '';
   URL = 'http://picshare-sfedu.azurewebsites.net/sql/';
-  Kotlin.defineModule('PicShareAK', _);
+  POST = 'POST';
+  GET = 'GET';
+  PUT = 'PUT';
+  DELETE = 'DELETE';
+  integrity = '';
+  credentials = 'include';
+  redirect = 'follow';
+  cache = 'default';
+  mode = 'cors';
+  referrerPolicy = 'origin-when-cross-origin';
+  headers = json([to('Content-Type', 'application/json')]);
   main([]);
+  Kotlin.defineModule('PicShareAK', _);
   return _;
 }(typeof PicShareAK === 'undefined' ? {} : PicShareAK, kotlin, this['kotlinx-html-js']);
