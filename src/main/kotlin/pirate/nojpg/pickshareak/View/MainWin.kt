@@ -45,7 +45,7 @@ fun mainWin(){
                             val url = "accounts/$valueOfId"
                             val body = json("username" to id.value)
                             println(JSON.stringify(body))
-                            fetchRequest(method = GET, body = null , url = url, fn = "getAcc") //GET
+                            fetchRequest(method = GET, body = null , url = url, fn = "getAcc", URL = sessionStorage.getItem("URL")) //GET
                         }
                     }
                 }
@@ -64,7 +64,7 @@ fun mainWin(){
                         + "Delete acc"
                         onClickFunction = fun(_: Event) {
                             authWin()
-                            fetchRequest(DELETE, body = null, url = "accounts", fn = "delAcc")
+                            fetchRequest(DELETE, body = null, url = "accounts", fn = "delAcc", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -88,7 +88,7 @@ fun mainWin(){
                             val url = "accounts/$valueOfId/posts"
                             val body = json("username" to valueOfId)
                             println(JSON.stringify(body))
-                            fetchRequest(method = GET, body = null , url = url, fn = "getPosts") //GET
+                            fetchRequest(method = GET, body = null , url = url, fn = "getPosts", URL = sessionStorage.getItem("URL")) //GET
                         }
                     }
                 }
@@ -99,7 +99,7 @@ fun mainWin(){
                         onClickFunction = fun(_:Event){
                             val id = document.getElementById("idGetAcc") as HTMLInputElement
                             val valueOfId = id.value
-                            fetchRequest(DELETE, body = null, url = "posts/$valueOfId", fn = "delAcc")
+                            fetchRequest(DELETE, body = null, url = "posts/$valueOfId", fn = "delAcc", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -108,7 +108,7 @@ fun mainWin(){
                     button {
                         + "Feeds"
                         onClickFunction = fun(_:Event){
-                            fetchRequest(GET, null, url = "feed", fn = "getPosts")
+                            fetchRequest(GET, null, url = "feed", fn = "getPosts", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -117,7 +117,7 @@ fun mainWin(){
                     button {
                         + "Comments"
                         onClickFunction = fun(_:Event){
-                            fetchRequest(GET, null, "comments", fn = "getComments")
+                            fetchRequest(GET, null, "comments", fn = "getComments", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -126,7 +126,7 @@ fun mainWin(){
                     button {
                         + "Likes"
                         onClickFunction = fun(_:Event){
-                            fetchRequest(GET, null, "likes", fn = "getLikes")
+                            fetchRequest(GET, null, "likes", fn = "getLikes", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -136,7 +136,7 @@ fun mainWin(){
                         + "Logout"
                         onClickFunction = fun(_:Event){
                             authWin()
-                            fetchRequest(GET, null, "logout", "logAcc")
+                            fetchRequest(GET, null, "logout", "logAcc", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -145,7 +145,7 @@ fun mainWin(){
                     button {
                         + "Subscribers"
                         onClickFunction = fun(_:Event){
-                            fetchRequest(GET, null, "accounts/$username/followers", "getSubs")
+                            fetchRequest(GET, null, "accounts/$username/followers", "getSubs", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -155,7 +155,7 @@ fun mainWin(){
                         + "Subscriptions"
                         onClickFunction = fun(_:Event){
                             val username = sessionStorage.getItem("username")
-                            fetchRequest(GET, null, "accounts/$username/followings", "getFollower")
+                            fetchRequest(GET, null, "accounts/$username/followings", "getFollower", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }
@@ -166,7 +166,7 @@ fun mainWin(){
                         onClickFunction = fun(_:Event){
                             val id = document.getElementById("idGetAcc") as HTMLInputElement
                             val valueOfId = id.value
-                            fetchRequest(DELETE, body = null, url = "followers/$valueOfId", fn = "delAcc")
+                            fetchRequest(DELETE, body = null, url = "followers/$valueOfId", fn = "delAcc", URL = sessionStorage.getItem("URL"))
                         }
                     }
                 }

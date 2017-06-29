@@ -9,6 +9,7 @@ import pirate.nojpg.pickshareak.Controller.fetchRequest
 import pirate.nojpg.pickshareak.DELETE
 import pirate.nojpg.pickshareak.POST
 import kotlin.browser.document
+import kotlin.browser.sessionStorage
 
 /**
  * Created by Nojpg on 26.06.17.
@@ -41,14 +42,14 @@ fun getAccInfo(vid: String, username: String, email: String, gender: Boolean, pr
             + "subscribe" //TODO подписаться
             onClickFunction = fun (_: Event){
                 val url = "accounts/{$username}/followers"
-                fetchRequest(POST, null, url, "subscribe")
+                fetchRequest(POST, null, url, "subscribe", URL = sessionStorage.getItem("URL"))
             }
         }
         button {
-            + "subscribe" //TODO подписаться
+            + "unSubscribe" //TODO подписаться
             onClickFunction = fun (_: Event){
                 val url = "followings/{$username}"
-                fetchRequest(DELETE, null, url, "unSubscribe")
+                fetchRequest(DELETE, null, url, "unSubscribe", URL = sessionStorage.getItem("URL"))
             }
         }
     }
@@ -76,7 +77,11 @@ fun viewAcc(vid: String, username: String, email: String, gender: Boolean, priv:
             + "priv = $priv"
         }
         div {
-            + "photo = $photo"
+            input {
+                type = InputType.image
+                src = "data:image/jpeg;base64," + photo
+                height = "100"
+            }
         }
     }
     root.appendChild(viewAccInfo)

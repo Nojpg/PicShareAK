@@ -6,9 +6,11 @@ import kotlinx.html.js.onClickFunction
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import org.w3c.dom.set
 import pirate.nojpg.pickshareak.Controller.fetchRequest
 import pirate.nojpg.pickshareak.POST
 import kotlin.browser.document
+import kotlin.browser.sessionStorage
 import kotlin.js.json
 
 /**
@@ -56,7 +58,19 @@ root.innerHTML = ""
                         val password = document.getElementById("PasswordAuth") as HTMLInputElement
                         val body = JSON.stringify(json("username" to username.value, "password" to password.value))
                         println(body)
-                        fetchRequest(method = POST, body = body, url = url, fn = "login")
+                        val checkSql = (document.getElementById("radioSql") as HTMLInputElement).checked
+                        val checkNoSql = (document.getElementById("radioNoSql") as HTMLInputElement).checked
+                        if (checkSql == true){
+                            sessionStorage.setItem("URL", "http://picshare-sfedu.azurewebsites.net/sql/")
+                            val URL = sessionStorage.getItem("URL")
+                            fetchRequest(method = POST, body = body, url = url, fn = "login", URL = URL)
+                        } else if (checkNoSql == true){
+                            sessionStorage.setItem("URL", "http://picshare-sfedu.azurewebsites.net/nosql/")
+                            val URL = sessionStorage.getItem("URL")
+                            fetchRequest(method = POST, body = body, url = url, fn = "login", URL = URL)
+                        } else {
+                            println("Choose DB")
+                        }
                     }
 
                 }
@@ -78,8 +92,8 @@ root.innerHTML = ""
                 input {
                     type = InputType.radio
                     name = "radioSql"
+                    id = "radioSql"
                     value = "sql"
-                    onClickFunction = {} //TODO changeDb
                 }
                 + "sql"
                 for_ = "radioSql"
@@ -89,8 +103,8 @@ root.innerHTML = ""
                 input {
                     type = InputType.radio
                     name = "radioNoSql"
+                    id = "radioNoSql"
                     value = "nosql"
-                    onClickFunction = {} //TODO changeDb
                 }
                 + "nosql"
                 for_ = "radioNoSql"

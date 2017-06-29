@@ -13,6 +13,7 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import pirate.nojpg.pickshareak.Controller.fetchRequest
 import pirate.nojpg.pickshareak.POST
+import kotlin.browser.sessionStorage
 import kotlin.js.json
 
 
@@ -30,7 +31,7 @@ fun addComment(vid: String){
             onClickFunction = fun(_: Event){
                 val link = document.getElementById("commText")!! as HTMLInputElement
                 val body = json("text" to link.value)
-                fetchRequest(POST, body = body, url = "posts/$vid/comments")
+                fetchRequest(POST, body = body, url = "posts/$vid/comments", URL = sessionStorage.getItem("URL"))
                 mainWin()
             }
         }

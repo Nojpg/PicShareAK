@@ -12,11 +12,11 @@ import kotlin.js.Promise
  * Created by Nojpg on 26.06.17.
  */
 
-fun fetchRequest(method: String, body: dynamic, url: String, fn: dynamic = ""){
+fun fetchRequest(method: String, body: dynamic, url: String, fn: dynamic = "", URL: String?){
     println("$method $body $url")
     println(JSON.stringify(headers))
     val request: Request = Request(
-            input = URL + url,
+            input = """$URL$url""",
             init = RequestInit(
                     redirect = redirect,
                     cache = cache,

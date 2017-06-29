@@ -10,14 +10,17 @@ import org.w3c.dom.events.Event
 import org.w3c.dom.get
 import org.w3c.files.Blob
 import org.w3c.files.FileReader
+import org.w3c.files.get
 import org.w3c.xhr.FormData
 import pirate.nojpg.pickshareak.Controller.fetchRequest
 import pirate.nojpg.pickshareak.Model.Account
 import pirate.nojpg.pickshareak.Model.AuthAcc
 import pirate.nojpg.pickshareak.Model.Post
+import pirate.nojpg.pickshareak.Model.PutAcc
 import pirate.nojpg.pickshareak.POST
 import pirate.nojpg.pickshareak.PUT
 import kotlin.browser.document
+import kotlin.browser.sessionStorage
 import kotlin.browser.window
 
 /**
@@ -78,7 +81,15 @@ fun viewReg(){
                 input{
                     id = "PasswordReg"
                     type = InputType.password
-                    placeholder = "Password"
+                    placeholder = "Password if new acc"
+                }
+            }
+            div {
+                classes = setOf("singIn")
+                input {
+                    id = "idForChange"
+                    type = InputType.text
+                    placeholder = "Id if change acc"
                 }
             }
             div{
@@ -88,32 +99,38 @@ fun viewReg(){
                     id = "PhotoReg"
                     name = "photoReg"
                     type = InputType.file
-//                    onChangeFunction = encodeImg()
+                    onChangeFunction = fun (e:Event){
+                        var file = document.getElementById("PhotoReg") as HTMLInputElement
+                        file.files!![0]
+                        val preview = document.getElementById("previewReg") as HTMLInputElement
+                        var reader = FileReader()
+                        reader.onloadend = fun (_: Event){
+                            preview.src = reader.result
+                            println(reader.result)
+                        }
+                        file.files!![0]?.let { reader.readAsDataURL(it) }
+                    }
+                }
+            }
+            div {
+                classes = setOf("singIn")
+                input {
+                    id = "previewReg"
+                    type = InputType.image
+                    height = "50"
                 }
             }
             div {
                 input {
-                    id = "registration"
                     type = InputType.button
-                    value = "registration"
-                    onClickFunction = fun (_: Event) {
+                    + "In"
+                    value = "In"
+                    onClickFunction = fun (_: Event){
                         val username : HTMLInputElement?= document.getElementById("LoginReg")!! as HTMLInputElement
                         val password: HTMLInputElement? = document.getElementById("PasswordReg")!! as HTMLInputElement
-                        val email: HTMLInputElement? = document.getElementById("EmailReg")!! as HTMLInputElement
-                        val gender: HTMLInputElement? = document.getElementById("genderReg")!! as  HTMLInputElement
-                        val priv: HTMLInputElement? = document.getElementById("privReg")!! as HTMLInputElement
-                        val photo = document.getElementById("PhotoReg")!! as HTMLInputElement
-//                        val reader:FileReader = FileReader()
-
-
-
-
-                        var body = JSON.stringify(Account(username!!.value, password!!.value, email!!.value, gender!!.value, priv!!.value, photo!!.value))
+                        val body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
                         println(body)
-                        fetchRequest(POST, body, url = "accounts/", fn = "getAcc")
-                        body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
-                        println(body)
-                        fetchRequest(POST, body, url = "login", fn = "getAcc")
+                        fetchRequest(POST, body, url = "login", fn = "login", URL = sessionStorage.getItem("URL"))
                     }
                 }
             }
@@ -128,31 +145,45 @@ fun viewReg(){
                         val email: HTMLInputElement? = document.getElementById("EmailReg")!! as HTMLInputElement
                         val gender: HTMLInputElement? = document.getElementById("genderReg")!! as  HTMLInputElement
                         val priv: HTMLInputElement? = document.getElementById("privReg")!! as HTMLInputElement
-                        val photo = document.getElementById("PhotoReg")!! as HTMLInputElement
-//                        val reader:FileReader = FileReader()
+                        val photoSrc = document.getElementById("previewReg")!! as HTMLInputElement
+                        val photo = photoSrc.src.split(",")[1]
+                        println(photo)
+                        var body = JSON.stringify(Account(username!!.value, password!!.value, email!!.value, gender!!.value, priv!!.value, photo))
+                        fetchRequest(POST, body, url = "accounts/", URL = sessionStorage.getItem("URL")) //, fn = "getAcc"
+//                        body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
+//                        println(body)
+//                        fetchRequest(POST, body, url = "login", fn = "login")
+                    }
+                }
+            }
 
-
-
-
-                        var body = JSON.stringify(Account(username!!.value, password!!.value, email!!.value, gender!!.value, priv!!.value, photo!!.value))
-                        println(body)
-                        fetchRequest(PUT, body, url = "accounts", fn = "getAcc")
-                        body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
-                        println(body)
-                        fetchRequest(POST, body, url = "login", fn = "getAcc")
+            div {
+                input {
+                    id = "change"
+                    type = InputType.button
+                    value = "change acc"
+                    onClickFunction = fun (_: Event) {
+                        val username : HTMLInputElement?= document.getElementById("LoginReg")!! as HTMLInputElement
+                        val id: HTMLInputElement? = document.getElementById("idForChange")!! as HTMLInputElement
+                        val email: HTMLInputElement? = document.getElementById("EmailReg")!! as HTMLInputElement
+                        val gender: HTMLInputElement? = document.getElementById("genderReg")!! as  HTMLInputElement
+                        val priv: HTMLInputElement? = document.getElementById("privReg")!! as HTMLInputElement
+                        val photoSrc = document.getElementById("previewReg")!! as HTMLInputElement
+                        val photo = photoSrc.src.split(",")[1]
+                        var body = JSON.stringify(PutAcc(
+                                username =  username!!.value,
+                                id =  id!!.value,
+                                email = email!!.value,
+                                gender = gender!!.value,
+                                priv = priv!!.value,
+                                photo = photo))
+                        fetchRequest(PUT, body, url = "accounts", fn = "getAcc", URL = sessionStorage.getItem("URL"))
+//                        body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
+//                        fetchRequest(POST, body, url = "login", fn = "getAcc")
                     }
                 }
             }
         }
     }
     root.appendChild(regWin)
-}
-fun encodeImg(el: dynamic){
-    var file = el.files[0]
-    var reader = FileReader()
-    reader.onloadend = fun (_: Event){
-        println("base64")
-        println(reader.result)
-    }
-    reader.readAsDataURL(file)
 }

@@ -5,14 +5,18 @@ package pirate.nojpg.pickshareak
  */
 
 import jquery.jq
-import kotlinx.html.FormMethod
-import kotlinx.html.InputType
+import kotlinx.html.*
 import kotlinx.html.dom.create
-import kotlinx.html.form
-import kotlinx.html.input
 import kotlinx.html.js.div
+import kotlinx.html.js.onChangeFunction
+import org.w3c.dom.Element
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.InputEvent
 import org.w3c.fetch.*
+import org.w3c.files.Blob
+import org.w3c.files.FileReader
+import org.w3c.files.get
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.js.Json
@@ -26,7 +30,7 @@ import kotlin.js.Date
 
 //import pirate.nojpg.pickshareak.View.launch
 
-const val URL: String = "http://picshare-sfedu.azurewebsites.net/sql/"
+//const val URL: String = "http://picshare-sfedu.azurewebsites.net/sql/"
 
 const val POST: String = "POST"
 const val GET: String = "GET"
@@ -43,10 +47,62 @@ val headers: Json = json("Content-Type" to "application/json")
 
 fun main(args: Array<String>) {
 
-
-
     launch()
+//    function encodeImageFileAsURL(element) {
+//        var file = element.files[0];
+//        console.log(file)
+//        var reader = new FileReader();
+//        reader.onloadend = function() {
+//            console.log('RESULT', reader.result)
+//        }
+//        reader.readAsDataURL(file);
+//    }
+//    fun encodeImageFileAsURL(e: dynamic): ((Event) -> dynamic)? {
+//        var file = e.files[0]
+//        println(file)
+//        var reader = FileReader()
+//        reader.onloadend = fun (_: Event){
+//            print("RESULT {$reader.result}")
+//        }
+//        reader.readAsDataURL(blob = file)
+//    }
+//    val root = document.getElementById("root")!!
+//    val img = document.create.div {
+//        input {
+//            type = InputType.file
+//            id = "hello"
+//
+//            onChangeFunction = fun (e:Event){
+//                var file = document.getElementById("hello") as HTMLInputElement
+//                file.files!![0]
+//                println(file)
+//                val preview = document.getElementById("photoImg") as HTMLInputElement
+//                println(file.files!![0])
+//                println(JSON.stringify(file.files!![0]))
+//                println(JSON.stringify(file))
+//                var reader = FileReader()
+//                reader.onloadend = fun (_: Event){
+//                    println(reader.result)
+//                    preview.src = reader.result
+//
+//                }
+//                file.files!![0]?.let { reader.readAsDataURL(it) }
+//            }
+//
+//        }
+//        input {
+//            type = InputType.image
+//            id = "photoImg"
+//            height = "200"
+//        }
+//    }
+//    root.appendChild(img)
 
+//    var image = document.querySelector("input[type=file]")!! as HTMLInputElement
+//    image.onchange = encodeImageFileAsURL(image)
+//    image.files!![0]
+//    println(image.files)
+//    println(image.files!![0])
 
     //TODO доработать гуй добавления постов, просмотр постов, удалить пост, добавить кнопку подписаться, подписчики+подписки, лента, комменты, лайки,
 

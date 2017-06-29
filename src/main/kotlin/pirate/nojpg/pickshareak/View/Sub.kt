@@ -36,5 +36,5 @@ fun sub(vid: String, datetime: String, username: String){
             + "username = $username"
         }
     }
-    subs.appendChild(subs)
+    subs.appendChild(sub)
 }
