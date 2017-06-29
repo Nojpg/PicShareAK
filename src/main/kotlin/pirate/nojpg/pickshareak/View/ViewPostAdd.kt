@@ -13,6 +13,7 @@ import org.w3c.files.get
 import pirate.nojpg.pickshareak.Controller.fetchRequest
 import pirate.nojpg.pickshareak.DELETE
 import pirate.nojpg.pickshareak.GET
+import pirate.nojpg.pickshareak.Model.Post
 import pirate.nojpg.pickshareak.POST
 import kotlin.browser.document
 import kotlin.browser.sessionStorage
@@ -57,14 +58,17 @@ fun addPost(){
                 id = "sendFile"
                 type = InputType.button
                 + "send"
+                value = "send"
                 onClickFunction = fun (_: dynamic){
                     val url = "posts"
-                    val photo = document.getElementById("photoImg") as HTMLInputElement
-                    println(photo.src)
-                    val body = photo.src
+                    val photoSrc = document.getElementById("photoImg") as HTMLInputElement
+                    val photo = photoSrc.src.split(",")[1]
+                    println(photo)
+                    val body = JSON.stringify(Post(id = sessionStorage.getItem("id"), datetime = null, account = json("username" to sessionStorage.getItem("username")), photo = photo, likes = null))
                     println(body)
                     println(JSON.stringify(body))
-                    fetchRequest(POST, body, url, "", URL = sessionStorage.getItem("URL"))
+                    val URL = sessionStorage.getItem("URL")
+                    fetchRequest(POST, body, url, "", URL = URL)
                 }
             }
         }
@@ -123,8 +127,18 @@ fun viewSinglePost(vid: String, username: String, datetime: String, likes: dynam
         }
         button {
             id = "commentsPostLook"
+            + "look on comments"
             onClickFunction = fun (_: Event){
-                fetchRequest(GET, null, url = "posts/$vid/comments", fn = "showComm", URL = sessionStorage.getItem("URL"))
+                viewCommentCont()
+                fetchRequest(GET, null, url = "posts/$vid/comments", fn = "showComments", URL = sessionStorage.getItem("URL"))
+            }
+        }
+        button{
+            id = "addComm"
+            + "add comment"
+            onClickFunction = fun (_:Event){
+                viewCommentCont()
+                addComment(vid)
             }
         }
     }
@@ -165,6 +179,8 @@ fun viewComments(vid: String, datetime: String, username: String, text: String){
         }
         button {
             id = "addComm"
+            value = "add comment"
+            + "add comment"
             onClickFunction = fun (_: Event){
                 addComment(vid)
 //                fetchRequest(POST, body, url = "posts/$vid/comments", fn = showComments()) //TODO отдлельное окно под добалвение комментов
@@ -172,6 +188,8 @@ fun viewComments(vid: String, datetime: String, username: String, text: String){
         }
         button {
             id = "delComm"
+            value = "delete comment"
+            + "delete comment"
             onClickFunction = fun (_: Event){
 
             }

@@ -404,8 +404,14 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.date, other.date) && Kotlin.equals(this.account, other.account)))));
   };
   function Post(id, datetime, account, photo, likes) {
+    if (id === void 0)
+      id = null;
+    if (datetime === void 0)
+      datetime = null;
     if (photo === void 0)
       photo = '';
+    if (likes === void 0)
+      likes = null;
     this.id = id;
     this.datetime = datetime;
     this.account = account;
@@ -432,7 +438,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   Post.prototype.component5 = function () {
     return this.likes;
   };
-  Post.prototype.copy_c6xhrm$ = function (id, datetime, account, photo, likes) {
+  Post.prototype.copy_eei9x4$ = function (id, datetime, account, photo, likes) {
     return new Post(id === void 0 ? this.id : id, datetime === void 0 ? this.datetime : datetime, account === void 0 ? this.account : account, photo === void 0 ? this.photo : photo, likes === void 0 ? this.likes : likes);
   };
   Post.prototype.toString = function () {
@@ -570,7 +576,22 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     div($receiver, void 0, authWin$lambda$lambda$lambda_1);
   }
   function authWin$lambda$lambda$lambda$lambda_2(f) {
-    viewReg();
+    var tmp$, tmp$_0;
+    var checkSql = (Kotlin.isType(tmp$ = document.getElementById('radioSql'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE()).checked;
+    var checkNoSql = (Kotlin.isType(tmp$_0 = document.getElementById('radioNoSql'), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE()).checked;
+    if (checkSql === true) {
+      sessionStorage.setItem('URL', 'http://picshare-sfedu.azurewebsites.net/sql/');
+      var URL = sessionStorage.getItem('URL');
+      viewReg();
+    }
+     else if (checkNoSql === true) {
+      sessionStorage.setItem('URL', 'http://picshare-sfedu.azurewebsites.net/nosql/');
+      var URL_0 = sessionStorage.getItem('URL');
+      viewReg();
+    }
+     else {
+      println('Choose DB');
+    }
   }
   function authWin$lambda$lambda$lambda_2($receiver) {
     $receiver.type = InputType.button;
@@ -594,7 +615,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   }
   function authWin$lambda$lambda$lambda$lambda_4($receiver) {
     $receiver.type = InputType.radio;
-    $receiver.name = 'radioNoSql';
+    $receiver.name = 'radioSql';
     set_id($receiver, 'radioNoSql');
     $receiver.value = 'nosql';
   }
@@ -621,6 +642,15 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     var authWin = div_0(get_create(document), void 0, authWin$lambda);
     root.appendChild(authWin);
   }
+  function viewCommentCont$lambda($receiver) {
+    set_id($receiver, 'container');
+  }
+  function viewCommentCont() {
+    var tmp$;
+    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var container = div_0(get_create(document), void 0, viewCommentCont$lambda);
+    root.appendChild(container);
+  }
   function addComment$lambda$lambda($receiver) {
     $receiver.type = InputType.text;
     set_id($receiver, 'commText');
@@ -629,7 +659,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     return function (f) {
       var tmp$, tmp$_0;
       var link = Kotlin.isType(tmp$_0 = (tmp$ = document.getElementById('commText')) != null ? tmp$ : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_0 : Kotlin.throwCCE();
-      var body = json([to('text', link.value)]);
+      var body = JSON.stringify(json([to('text', link.value)]));
       fetchRequest(POST, body, 'posts/' + closure$vid + '/comments', void 0, sessionStorage.getItem('URL'));
       mainWin();
     };
@@ -637,6 +667,8 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   function addComment$lambda$lambda_0(closure$vid) {
     return function ($receiver) {
       $receiver.type = InputType.button;
+      $receiver.unaryPlus_pdl1vz$('post comment');
+      $receiver.value = 'post comment';
       set_onClickFunction($receiver, addComment$lambda$lambda$lambda(closure$vid));
     };
   }
@@ -648,7 +680,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   }
   function addComment(vid) {
     var tmp$;
-    var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
+    var root = (tmp$ = document.getElementById('container')) != null ? tmp$ : Kotlin.throwNPE();
     root.innerHTML = '';
     var comm = div_0(get_create(document), void 0, addComment$lambda(vid));
     root.appendChild(comm);
@@ -999,7 +1031,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
     var photoSrc = Kotlin.isType(tmp$_10 = (tmp$_9 = document.getElementById('previewReg')) != null ? tmp$_9 : Kotlin.throwNPE(), HTMLInputElement) ? tmp$_10 : Kotlin.throwCCE();
     var photo = split(photoSrc.src, [',']).get_za3lpa$(1);
     var body = JSON.stringify(new PutAcc((username != null ? username : Kotlin.throwNPE()).value, (id != null ? id : Kotlin.throwNPE()).value, (email != null ? email : Kotlin.throwNPE()).value, (gender != null ? gender : Kotlin.throwNPE()).value, (priv != null ? priv : Kotlin.throwNPE()).value, photo));
-    fetchRequest(PUT, body, 'accounts', 'getAcc', sessionStorage.getItem('URL'));
+    fetchRequest(PUT, body, 'accounts', void 0, sessionStorage.getItem('URL'));
   }
   function viewReg$lambda$lambda$lambda$lambda_9($receiver) {
     set_id($receiver, 'change');
@@ -1106,17 +1138,20 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   function addPost$lambda$lambda$lambda$lambda_0(f) {
     var tmp$;
     var url = 'posts';
-    var photo = Kotlin.isType(tmp$ = document.getElementById('photoImg'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
-    println(photo.src);
-    var body = photo.src;
+    var photoSrc = Kotlin.isType(tmp$ = document.getElementById('photoImg'), HTMLInputElement) ? tmp$ : Kotlin.throwCCE();
+    var photo = split(photoSrc.src, [',']).get_za3lpa$(1);
+    println(photo);
+    var body = JSON.stringify(new Post(sessionStorage.getItem('id'), null, json([to('username', sessionStorage.getItem('username'))]), photo, null));
     println(body);
     println(JSON.stringify(body));
-    fetchRequest(POST, body, url, '', sessionStorage.getItem('URL'));
+    var URL = sessionStorage.getItem('URL');
+    fetchRequest(POST, body, url, '', URL);
   }
   function addPost$lambda$lambda$lambda_1($receiver) {
     set_id($receiver, 'sendFile');
     $receiver.type = InputType.button;
     $receiver.unaryPlus_pdl1vz$('send');
+    $receiver.value = 'send';
     set_onClickFunction($receiver, addPost$lambda$lambda$lambda$lambda_0);
   }
   function addPost$lambda$lambda($receiver) {
@@ -1194,13 +1229,28 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   }
   function viewSinglePost$lambda$lambda$lambda_1(closure$vid) {
     return function (f) {
-      fetchRequest(GET, null, 'posts/' + closure$vid + '/comments', 'showComm', sessionStorage.getItem('URL'));
+      viewCommentCont();
+      fetchRequest(GET, null, 'posts/' + closure$vid + '/comments', 'showComments', sessionStorage.getItem('URL'));
     };
   }
   function viewSinglePost$lambda$lambda_3(closure$vid) {
     return function ($receiver) {
       set_id($receiver, 'commentsPostLook');
+      $receiver.unaryPlus_pdl1vz$('look on comments');
       set_onClickFunction($receiver, viewSinglePost$lambda$lambda$lambda_1(closure$vid));
+    };
+  }
+  function viewSinglePost$lambda$lambda$lambda_2(closure$vid) {
+    return function (f) {
+      viewCommentCont();
+      addComment(closure$vid);
+    };
+  }
+  function viewSinglePost$lambda$lambda_4(closure$vid) {
+    return function ($receiver) {
+      set_id($receiver, 'addComm');
+      $receiver.unaryPlus_pdl1vz$('add comment');
+      set_onClickFunction($receiver, viewSinglePost$lambda$lambda$lambda_2(closure$vid));
     };
   }
   function viewSinglePost$lambda(closure$vid, closure$datetime, closure$username, closure$like, closure$likes, closure$photo) {
@@ -1211,6 +1261,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
       button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_1(closure$likes));
       input($receiver, void 0, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_2(closure$photo));
       button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_3(closure$vid));
+      button($receiver, void 0, void 0, void 0, void 0, viewSinglePost$lambda$lambda_4(closure$vid));
     };
   }
   function viewSinglePost(vid, username, datetime, likes, photo, like) {
@@ -1275,6 +1326,8 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   function viewComments$lambda$lambda_3(closure$vid) {
     return function ($receiver) {
       set_id($receiver, 'addComm');
+      $receiver.value = 'add comment';
+      $receiver.unaryPlus_pdl1vz$('add comment');
       set_onClickFunction($receiver, viewComments$lambda$lambda$lambda(closure$vid));
     };
   }
@@ -1282,6 +1335,8 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   }
   function viewComments$lambda$lambda_4($receiver) {
     set_id($receiver, 'delComm');
+    $receiver.value = 'delete comment';
+    $receiver.unaryPlus_pdl1vz$('delete comment');
     set_onClickFunction($receiver, viewComments$lambda$lambda$lambda_0);
   }
   function viewComments$lambda(closure$vid, closure$datetime, closure$username, closure$text) {
@@ -1326,18 +1381,13 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
       $receiver.unaryPlus_pdl1vz$('priv = ' + closure$priv);
     };
   }
-  function getAccInfo$lambda$lambda_4(closure$photo) {
-    return function ($receiver) {
-      $receiver.unaryPlus_pdl1vz$('photo = ' + Kotlin.toString(closure$photo));
-    };
-  }
   function getAccInfo$lambda$lambda$lambda(closure$username) {
     return function (f) {
-      var url = 'accounts/{' + closure$username + '}/followers';
+      var url = 'accounts/' + closure$username + '/followers';
       fetchRequest(POST, null, url, 'subscribe', sessionStorage.getItem('URL'));
     };
   }
-  function getAccInfo$lambda$lambda_5(closure$username) {
+  function getAccInfo$lambda$lambda_4(closure$username) {
     return function ($receiver) {
       $receiver.unaryPlus_pdl1vz$('subscribe');
       set_onClickFunction($receiver, getAccInfo$lambda$lambda$lambda(closure$username));
@@ -1345,17 +1395,17 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   }
   function getAccInfo$lambda$lambda$lambda_0(closure$username) {
     return function (f) {
-      var url = 'followings/{' + closure$username + '}';
+      var url = 'followings/' + closure$username;
       fetchRequest(DELETE, null, url, 'unSubscribe', sessionStorage.getItem('URL'));
     };
   }
-  function getAccInfo$lambda$lambda_6(closure$username) {
+  function getAccInfo$lambda$lambda_5(closure$username) {
     return function ($receiver) {
       $receiver.unaryPlus_pdl1vz$('unSubscribe');
       set_onClickFunction($receiver, getAccInfo$lambda$lambda$lambda_0(closure$username));
     };
   }
-  function getAccInfo$lambda(closure$vid, closure$username, closure$email, closure$gender, closure$priv, closure$photo) {
+  function getAccInfo$lambda(closure$vid, closure$username, closure$email, closure$gender, closure$priv) {
     return function ($receiver) {
       set_id($receiver, 'getAccInfo');
       div($receiver, void 0, getAccInfo$lambda$lambda(closure$vid));
@@ -1363,15 +1413,14 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
       div($receiver, void 0, getAccInfo$lambda$lambda_1(closure$email));
       div($receiver, void 0, getAccInfo$lambda$lambda_2(closure$gender));
       div($receiver, void 0, getAccInfo$lambda$lambda_3(closure$priv));
-      div($receiver, void 0, getAccInfo$lambda$lambda_4(closure$photo));
+      button($receiver, void 0, void 0, void 0, void 0, getAccInfo$lambda$lambda_4(closure$username));
       button($receiver, void 0, void 0, void 0, void 0, getAccInfo$lambda$lambda_5(closure$username));
-      button($receiver, void 0, void 0, void 0, void 0, getAccInfo$lambda$lambda_6(closure$username));
     };
   }
   function getAccInfo(vid, username, email, gender, priv, photo) {
     var tmp$;
     var root = (tmp$ = document.getElementById('root')) != null ? tmp$ : Kotlin.throwNPE();
-    var viewAccInfo = div_0(get_create(document), void 0, getAccInfo$lambda(vid, username, email, gender, priv, photo));
+    var viewAccInfo = div_0(get_create(document), void 0, getAccInfo$lambda(vid, username, email, gender, priv));
     root.appendChild(viewAccInfo);
   }
   function viewAcc$lambda$lambda(closure$vid) {
@@ -1553,6 +1602,7 @@ var PicShareAK = function (_, Kotlin, $module$kotlinx_html_js) {
   package$Model.PutAcc = PutAcc;
   var package$View = package$pickshareak.View || (package$pickshareak.View = {});
   package$View.authWin = authWin;
+  package$View.viewCommentCont = viewCommentCont;
   package$View.addComment_61zpoe$ = addComment;
   package$View.launch = launch;
   package$View.mainWin = mainWin;

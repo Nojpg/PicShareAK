@@ -16,9 +16,18 @@ import pirate.nojpg.pickshareak.POST
 import kotlin.browser.sessionStorage
 import kotlin.js.json
 
+fun viewCommentCont(){
+    val root: Element = document.getElementById("root")!!
+//    root.innerHTML = ""
+        val container = document.create.div {
+            id = "container"
+        }
+
+    root.appendChild(container)
+}
 
 fun addComment(vid: String){
-    val root: Element = document.getElementById("root")!!
+    val root: Element = document.getElementById("container")!!
     root.innerHTML = ""
 
     val comm = document.create.div {
@@ -28,9 +37,11 @@ fun addComment(vid: String){
         }
         input {
             type = InputType.button
+            + "post comment"
+            value = "post comment"
             onClickFunction = fun(_: Event){
                 val link = document.getElementById("commText")!! as HTMLInputElement
-                val body = json("text" to link.value)
+                val body = JSON.stringify(json("text" to link.value))
                 fetchRequest(POST, body = body, url = "posts/$vid/comments", URL = sessionStorage.getItem("URL"))
                 mainWin()
             }

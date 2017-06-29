@@ -35,20 +35,20 @@ fun getAccInfo(vid: String, username: String, email: String, gender: Boolean, pr
         div {
             + "priv = $priv"
         }
-        div {
-            + "photo = $photo"
-        }
+//        div {
+//            + "photo = $photo"
+//        }
         button {
             + "subscribe" //TODO подписаться
             onClickFunction = fun (_: Event){
-                val url = "accounts/{$username}/followers"
+                val url = "accounts/$username/followers"
                 fetchRequest(POST, null, url, "subscribe", URL = sessionStorage.getItem("URL"))
             }
         }
         button {
             + "unSubscribe" //TODO подписаться
             onClickFunction = fun (_: Event){
-                val url = "followings/{$username}"
+                val url = "followings/$username"
                 fetchRequest(DELETE, null, url, "unSubscribe", URL = sessionStorage.getItem("URL"))
             }
         }

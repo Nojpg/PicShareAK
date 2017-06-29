@@ -82,7 +82,19 @@ root.innerHTML = ""
                 type = InputType.button
                 value = "Registration"
                 onClickFunction = fun (_: Event){
-                    viewReg()
+                    val checkSql = (document.getElementById("radioSql") as HTMLInputElement).checked
+                    val checkNoSql = (document.getElementById("radioNoSql") as HTMLInputElement).checked
+                    if (checkSql == true){
+                        sessionStorage.setItem("URL", "http://picshare-sfedu.azurewebsites.net/sql/")
+                        val URL = sessionStorage.getItem("URL")
+                        viewReg()
+                    } else if (checkNoSql == true){
+                        sessionStorage.setItem("URL", "http://picshare-sfedu.azurewebsites.net/nosql/")
+                        val URL = sessionStorage.getItem("URL")
+                        viewReg()
+                    } else {
+                        println("Choose DB")
+                    }
                 }
             }
         }
@@ -102,7 +114,7 @@ root.innerHTML = ""
             label {
                 input {
                     type = InputType.radio
-                    name = "radioNoSql"
+                    name = "radioSql"
                     id = "radioNoSql"
                     value = "nosql"
                 }

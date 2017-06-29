@@ -177,7 +177,7 @@ fun viewReg(){
                                 gender = gender!!.value,
                                 priv = priv!!.value,
                                 photo = photo))
-                        fetchRequest(PUT, body, url = "accounts", fn = "getAcc", URL = sessionStorage.getItem("URL"))
+                        fetchRequest(PUT, body, url = "accounts", URL = sessionStorage.getItem("URL"))//, fn = "getAcc"
 //                        body = JSON.stringify(AuthAcc(username!!.value, password!!.value))
 //                        fetchRequest(POST, body, url = "login", fn = "getAcc")
                     }

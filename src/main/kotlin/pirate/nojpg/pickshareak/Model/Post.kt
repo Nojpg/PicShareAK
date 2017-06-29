@@ -7,9 +7,9 @@ import kotlin.js.json
  * Created by Nojpg on 15.06.17.
  */
 data class Post (
-        var id: String?,
-        var datetime: kotlin.js.Date,
-        var account: String,  //singUp.username
+        var id: String? = null,
+        var datetime: dynamic = null,
+        var account: dynamic,  //singUp.username
         var photo: String = "",
-        var likes: Array<Like>
+        var likes: dynamic = null
 )
